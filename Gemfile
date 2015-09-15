@@ -1,11 +1,23 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+gem 'execjs'
+
+gem 'responders', '~> 2.0' 
+
+#gem 'therubyracer', :platforms => :ruby
+
+gem 'libv8'
+
+gem 'sass-rails'
+
+gem 'angular_rails_csrf'
+
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -19,6 +31,7 @@ gem 'jquery-rails'
 
 gem 'angular-rails-templates'
 
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
