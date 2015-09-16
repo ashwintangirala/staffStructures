@@ -1,10 +1,8 @@
-require 'json'
 
 class PostsController < ApplicationController
 	protect_from_forgery with: :exception
 
 	respond_to :json
-
 
 	def index
 		logger.debug Post.all
@@ -32,4 +30,3 @@ class PostsController < ApplicationController
 	end
 
 end
- 

@@ -26,6 +26,6 @@ default: &default
 
 development:
   <<: *default
-  database: flapperNews_development
+  database: staffStructures_development
 
 

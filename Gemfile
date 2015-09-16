@@ -5,6 +5,8 @@ gem 'rails'
 # Use postgresql as the database for Active Record
 gem 'pg'
 
+gem 'rename'
+
 gem 'execjs'
 
 gem 'responders', '~> 2.0' 

@@ -1,10 +1,5 @@
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <ui-view></ui-view>
-    </div>
-  </div>
 <div ng-controller="MainCtrl">
-	{{test}}
+<!--
       <div ng-repeat="post in posts | orderBy:'-upvotes'">
         <span class="glyphicon glyphicon-thumbs-up"
           ng-click="incrementUpvotes(post)"></span>
@@ -18,8 +13,8 @@
           </span>
         </span>
       </div>
-    <div>
 
+    <div>
       <form ng-submit="addPost()"
         style="margin-top:30px;">
         <h3>Add a new post</h3>
@@ -39,5 +34,32 @@
         <button type="submit" class="btn btn-primary">Post</button>
       </form>
     </div>
+-->
+<!-- teams -->
+      <div ng-repeat="team in teams | orderBy:'-upvotes'"> 
+        <span style="font-size:20px; margin-left:10px;">
+          <a >
+            {{post.title}}
+          </a>
+        </span>
+      </div>
+
+    <div>
+      <form ng-submit="addTeam()"
+        style="margin-top:30px;">
+        <h3>Add a new team</h3>
+
+        <div class="form-group">
+          <input type="text"
+            class="form-control"
+            placeholder="name"
+            ng-model="name"></input>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Team</button>
+      </form>
+    </div>
+<!-- end teams -->
+
 </div>
 

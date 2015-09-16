@@ -1,13 +1,13 @@
 angular.module('myApp')
 .controller('MainCtrl', [
-'$scope'
-,  'posts'
-, function($scope, posts){
-
+'$scope' 
+,  'posts' 
+, 'teams'
+, 'employees'
+, function($scope, posts, teams, employees){
   $scope.test = 'Hello!';
 
   $scope.posts = posts.posts; 
-
   // $scope.addPost = function(){  
 	 // if(!$scope.title || $scope.title === '') { return; }
 	 //  $scope.posts.push({
@@ -23,6 +23,21 @@ angular.module('myApp')
 	 //  $scope.link = '';; 
   // }; 
 
+  $scope.addEmployee = function(){  
+   if(!$scope.emp_name || $scope.emp_name === '') { return; }
+  posts.create({
+    name: $scope.emp_name   
+  }); 
+  $scope.emp_name = '';  
+  }; 
+
+  $scope.addTeam = function(){ 
+   if(!$scope.name || $scope.name === '') { return; }
+  teams.create({
+    name: $scope.name   
+  }); 
+  $scope.name = '';  
+  };   
 
   $scope.addPost = function(){  
    if(!$scope.title || $scope.title === '') { return; }
@@ -39,4 +54,5 @@ $scope.incrementUpvotes = function(post) {
   posts.upvote(post); 
 };
 
-} ])
+}])
+

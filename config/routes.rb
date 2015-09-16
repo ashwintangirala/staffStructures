@@ -3,6 +3,11 @@ Rails.application.routes.draw do
 
   get 'main/index'
 
+
+  resources :teams 
+
+  resources :employees 
+
   resources :posts  do 
     member do 
       put '/upvote' => 'post#upvote'
@@ -13,6 +18,8 @@ Rails.application.routes.draw do
         put '/upvote' => 'comments#upvote'
       end 
     end
+
+
   end
   
 

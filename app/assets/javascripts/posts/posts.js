@@ -3,7 +3,6 @@ angular.module('myApp')
 	'$http',
   '$q'
 	, function($http, $q){
-
   var o = {
     posts: []
   }; 
