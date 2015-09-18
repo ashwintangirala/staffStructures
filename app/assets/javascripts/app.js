@@ -1,6 +1,5 @@
-var app = angular.module('myApp',  ['ui.router', 'templates', 'xeditable']); 
+var app = angular.module('myApp',  ['ui.router', 'templates', 'xeditable', 'ngResource']); 
 
-// app.module('myApp',  ['ui.router', 'templates'])
 app.config([
   '$stateProvider'
   , '$urlRouterProvider'

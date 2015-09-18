@@ -1,60 +1,34 @@
+var app =  angular.module('myApp'); 
 
-angular.module('myApp')
-.controller('MainCtrl', [
-'$scope' 
-,  'posts' 
-, 'teams'
+app.controller('MainCtrl', [
+'$scope'  
 , 'employees'
-, function($scope, posts, teams, employees){
+, 'teams'
+, 'team'
+, '$resource'
+, function($scope, employees, teams, team, $resource){
   $scope.test = 'Hello!';
 
-  $scope.teams = teams.teams; 
+  $scope.teams = teams.query(); 
 
-  $scope.employees = employees.employees; 
-  // $scope.addPost = function(){  
-	 // if(!$scope.title || $scope.title === '') { return; }
-	 //  $scope.posts.push({
-	 //    title: $scope.title,
-	 //    link: $scope.link,
-	 //    upvotes: 0
-  //     , comments: [
-  //     {author: 'bob', body:'great writing', upvotes: 0}
-  //     , {author: 'jerry', body: 'great idea!', upvotes: 0}
-  //     ]
-	 //  });
-	 //  $scope.title = '';
-	 //  $scope.link = '';; 
-  // }; 
+  $scope.employees = employees.query(); 
 
-  $scope.addEmployee = function(){  
-   if(!$scope.emp_name || $scope.emp_name === '') { return; }
-  employees.create({
-    name: $scope.emp_name   
-  }); 
-  $scope.emp_name = '';  
-  }; 
+  $scope.addTeam = function(){
+    teams.create( {name: $scope.name} ) ;
+    $scope.name = '';  
+    $scope.teams = teams.query(); 
+  }
 
-  $scope.addTeam = function(){ 
-   if(!$scope.name || $scope.name === '') { return; }
-  teams.create({
-    name: $scope.name   
-  }); 
-  $scope.name = '';  
-  };   
+  $scope.deleteTeam = function(teamID){
+    team.delete( {id: teamID}); 
+  };
 
-  $scope.addPost = function(){  
-   if(!$scope.title || $scope.title === '') { return; }
-  posts.create({
-    title: $scope.title, 
-    link: $scope.link, 
-  }); 
-  $scope.title = ''; 
-  $scope.link = ''; 
-  }; 
+  $scope.a = {}; 
 
-$scope.incrementUpvotes = function(post) {
-  posts.upvote(post); 
-};
+
+  $scope.addEmployee = function(){
+    employees.create( {name: $scope.emp_name} ) ;
+    $scope.emp_name = '';  
+  }
 
 }])
-

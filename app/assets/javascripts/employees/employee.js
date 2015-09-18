@@ -1,29 +1,21 @@
-angular.module('myApp')
-.factory('employees', [
-	'$http' 
-	, function($http ){
+var app = angular.module('myApp');
 
-  var e = {
-    employees: [
-    {name: 'ashwin' }
-   , {name: 'john' }
-    ]
-  }; 
+app.factory('employees', [
+ '$resource' 
+ , function($resource ){
+  return $resource('/employees.json', {}, {
+        query:   {method:'GET', isArray: true},
+        create:  {method: 'POST'}
+  }); 
+}]);
 
-  e.getAll = function() {
-    return $http.get('/employees.json').success(function(data){
-      e.employees.push.apply(e.employees, data); 
-      // angular.copy(data, e.employees);
-    });
-  };
 
-  e.create = function(employee){
-    return $http.post('/employees.json', employee).success(function(data){
-      e.employees.push(data); 
-    });
-  };
+app.factory('employee', [
+ '$resource' 
+ , function($resource ){
+  return $resource('/employees/:id.json', {}, {
+        show: {method: 'GET'},
+        delete: {method: 'DELETE', params:{id: '@id'}}
+  });
+}]);
 
-  // e.update = function(employee
-
-  return e; 
-}])
