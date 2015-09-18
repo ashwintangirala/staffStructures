@@ -8,7 +8,7 @@ class EmployeesController < ApplicationController
 	end
 
 	def create 
-		respond_with Employee.create(post_params)
+		respond_with Employee.create(employee_params)
 	end
 
 	def show 

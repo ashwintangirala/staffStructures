@@ -1,3 +1,4 @@
+
 angular.module('myApp')
 .controller('MainCtrl', [
 '$scope' 
@@ -7,7 +8,9 @@ angular.module('myApp')
 , function($scope, posts, teams, employees){
   $scope.test = 'Hello!';
 
-  $scope.posts = posts.posts; 
+  $scope.teams = teams.teams; 
+
+  $scope.employees = employees.employees; 
   // $scope.addPost = function(){  
 	 // if(!$scope.title || $scope.title === '') { return; }
 	 //  $scope.posts.push({
@@ -25,7 +28,7 @@ angular.module('myApp')
 
   $scope.addEmployee = function(){  
    if(!$scope.emp_name || $scope.emp_name === '') { return; }
-  posts.create({
+  employees.create({
     name: $scope.emp_name   
   }); 
   $scope.emp_name = '';  
@@ -48,7 +51,6 @@ angular.module('myApp')
   $scope.title = ''; 
   $scope.link = ''; 
   }; 
-
 
 $scope.incrementUpvotes = function(post) {
   posts.upvote(post); 

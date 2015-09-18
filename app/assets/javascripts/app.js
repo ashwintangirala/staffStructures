@@ -1,5 +1,7 @@
-angular.module('myApp',  ['ui.router', 'templates'])
-.config([
+var app = angular.module('myApp',  ['ui.router', 'templates', 'xeditable']); 
+
+// app.module('myApp',  ['ui.router', 'templates'])
+app.config([
   '$stateProvider'
   , '$urlRouterProvider'
   , function($stateProvider, $urlRouterProvider){
@@ -19,10 +21,11 @@ angular.module('myApp',  ['ui.router', 'templates'])
           return posts.getAll(); 
         }]
       }
-
-
     }); 
 
     $urlRouterProvider.otherwise('home') ;
   }])
- 
+
+app.run(function(editableOptions) {
+  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+});

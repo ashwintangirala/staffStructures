@@ -7,7 +7,7 @@ class TeamsController < ApplicationController
 	end
 
 	def create 
-		respond_with Team.create(post_params)
+		respond_with Team.create(team_params)
 	end
 
 	def show 
@@ -15,8 +15,9 @@ class TeamsController < ApplicationController
 	end
 
 	private 
-	def employee_params 
+	def team_params 
 		params.require(:team).permit(:name)
 	end
 
 end
+
