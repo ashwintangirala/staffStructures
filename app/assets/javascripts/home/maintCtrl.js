@@ -14,21 +14,30 @@ app.controller('MainCtrl', [
   $scope.employees = employees.query(); 
 
   $scope.addTeam = function(){
-    teams.create( {name: $scope.name} ) ;
-    $scope.name = '';  
-    $scope.teams = teams.query(); 
+    var new_team = teams.create( {name: $scope.name} ) ;
+    $scope.teams.push(new_team); 
+    $scope.name = '';      
   }
+
 
   $scope.deleteTeam = function(teamID){
     team.delete( {id: teamID}); 
   };
 
+
   $scope.a = {}; 
 
+  $scope.team_hover_over  = function(index ){
+    this.show_trash = true;
+  }
+
+  $scope.team_leave  = function( ){
+    this.show_trash = false; 
+  }
 
   $scope.addEmployee = function(){
     employees.create( {name: $scope.emp_name} ) ;
     $scope.emp_name = '';  
   }
-
 }])
+

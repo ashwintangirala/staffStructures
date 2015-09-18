@@ -2,15 +2,16 @@
    <div class = "container">
       <div class="row">
        {{a.show_trash}}
-         <div class='col-md-6'>
+         <div class='col-md-6' style="min-height: 250px;">
             <div ng-repeat="team in teams | orderBy:'-upvotes'"> 
-               <span style="font-size:20px; margin-left:10px;">
+               <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
                <a editable-text = "team.name"  >
                {{team.name}}
                </a>
+                  <span ng-click="deleteTeam()" ng-show="show_trash" class="glyphicon glyphicon-trash">
+                  </span>
                </span>
-               <span ng-click="deleteTeam()" ng-mouseenter= "a.show_trash=true" ng-mouseleave="a.show_trash=false" class="glyphicon glyphicon-trash">
-               </span>
+         
             </div>
             <div>
                <form ng-submit="addTeam()"
@@ -22,7 +23,7 @@
                         placeholder="name"
                         ng-model="name"></input>
                   </div>
-                  <button type="submit" class="btn btn-primary">Add Team</button>
+                  <button type="submit" class="btn btn-primary" ng-mouseover= "team_hover_over();alert('hi')" ng-mouseleave="team_leave()">Add Team</button>
                </form>
             </div>
             <!-- end teams -->
