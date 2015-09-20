@@ -1,13 +1,23 @@
-var app =  angular.module('myApp'); 
+var app =  angular.module('myApp');
 
 app.controller('MainCtrl', [
-'$scope'  
+'$scope'
 , 'employees'
+, 'employee'
 , 'teams'
 , 'team'
 , '$resource'
-, function($scope, employees, teams, team, $resource){
+, function($scope, employees, employee, teams, team, $resource){
   $scope.test = 'Hello!';
+
+  $scope.posts = [
+  {title: 'post 1', type:"email"}
+  ,{title: 'post 2', type:"text"}
+  ,{title: 'post 3', type:"email"}
+  ,{title: 'post 4', type:"twtr"}
+  ,{title: 'post 5', type:"fb"}
+  ];
+
 
   $scope.teams = teams.query(); 
 
@@ -16,12 +26,22 @@ app.controller('MainCtrl', [
   $scope.addTeam = function(){
     var new_team = teams.create( {name: $scope.name} ) ;
     $scope.teams.push(new_team); 
-    $scope.name = '';      
+    $scope.name = ''; 
   }
+
+  $scope.updateTeam = function(teamID){   
+    team.update({id: teamID}); 
+  };
 
 
   $scope.deleteTeam = function(teamID){
-    team.delete( {id: teamID}); 
+    team.delete( {id: teamID} ); 
+    $scope.teams = teams.query();
+  };
+
+  $scope.deleteEmployee = function(empID){
+    employee.delete( {id: empID} ); 
+    $scope.employees = employees.query();
   };
 
 
@@ -36,8 +56,8 @@ app.controller('MainCtrl', [
   }
 
   $scope.addEmployee = function(){
-    employees.create( {name: $scope.emp_name} ) ;
+    var new_emp = employees.create( {name: $scope.emp_name} ) ;
+    $scope.employees.push(new_emp); 
     $scope.emp_name = '';  
   }
 }])
-

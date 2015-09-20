@@ -8,19 +8,8 @@ Rails.application.routes.draw do
 
   resources :employees 
 
-  resources :posts  do 
-    member do 
-      put '/upvote' => 'post#upvote'
-    end
-
-    resources :comments  do 
-      member do 
-        put '/upvote' => 'comments#upvote'
-      end 
-    end
 
 
-  end
   
 
 

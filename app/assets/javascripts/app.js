@@ -9,22 +9,14 @@ app.config([
     .state( 'home', {
         url: '/home'
         , templateUrl: '../templates/home/_home.html'
-        , controller: 'MainCtrl'
-      })  
-    .state('posts', {
-      url: '/posts/{id}'
-      , templateUrl: '../templates/posts/_posts.html'
-      , controller: 'postsCtrl'
-      , resolve: {
-        postPromise: ['posts', function(posts){
-          return posts.getAll(); 
-        }]
-      }
-    }); 
+        //, controller: 'MainCtrl' 
+      })
 
-    $urlRouterProvider.otherwise('home') ;
+    // $urlRouterProvider.otherwise('home') ;
   }])
 
 app.run(function(editableOptions) {
   editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 });
+
+

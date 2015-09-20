@@ -7,15 +7,15 @@ app.factory('teams', [
         query:   {method:'GET', isArray: true},
         create:  {method: 'POST'}
   }); 
-}]);  
- 
+}]);
+
+
 app.factory('team', [
  '$resource' 
  , function($resource ){
-  return $resource('/team/:id.json', {}, {
+  return $resource('/teams/:id.json', {}, {
         show: {method: 'GET'},
         delete: {method: 'DELETE', params:{id: '@id'}},
         update:  {method: 'PUT', params: {id: '@id'}}  
   }); 
 }]);
-

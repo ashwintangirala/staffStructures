@@ -7,9 +7,13 @@ class EmployeesController < ApplicationController
 		respond_with  Employee.all 
 	end
 
+	def destroy
+		respond_with Employee.destroy(params[:id])
+	end
+
 	def create 
 		respond_with Employee.create(employee_params)
-	end
+ 	end
 
 	def show 
 		respond_with Employee.find(params([:id]))
