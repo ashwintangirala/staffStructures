@@ -2,13 +2,13 @@ Rails.application.routes.draw do
   root to: 'application#angular' 
 
   get 'main/index'
-
+  
 
   resources :teams 
 
   resources :employees 
 
-
+  resources :accounts  
 
   
 

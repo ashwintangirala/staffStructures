@@ -6,8 +6,10 @@ app.controller('MainCtrl', [
 , 'employee'
 , 'teams'
 , 'team'
+, 'accounts'
+, 'account'
 , '$resource'
-, function($scope, employees, employee, teams, team, $resource){
+, function($scope, employees, employee, teams, team, accounts, account, $resource){
   $scope.test = 'Hello!';
 
   $scope.posts = [
@@ -18,10 +20,24 @@ app.controller('MainCtrl', [
   ,{title: 'post 5', type:"fb"}
   ];
 
-
   $scope.teams = teams.query(); 
 
   $scope.employees = employees.query(); 
+
+  $scope.accounts = accounts.query(); 
+
+  $scope.addAccount = function(){
+    var new_acct= accounts.create( {name: $scope.acct_name} ) ;
+    $scope.accounts.push(new_acct); 
+    $scope.acct_name = ''; 
+  }
+
+  $scope.deleteAccount = function(acctID){
+    
+    account.delete( {id: acctID} ); 
+    $scope.accounts = accounts.query();
+  };
+
 
   $scope.addTeam = function(){
     var new_team = teams.create( {name: $scope.name} ) ;
@@ -35,6 +51,7 @@ app.controller('MainCtrl', [
 
 
   $scope.deleteTeam = function(teamID){
+    
     team.delete( {id: teamID} ); 
     $scope.teams = teams.query();
   };

@@ -1,35 +1,64 @@
 <div ng-controller="MainCtrl">
    <div class = "container">
+      <div class="row">
+         <div class="col-md-6">
+            <div ng-repeat="team in teams">
+               <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
+               <a editable-text = "team.name" onaftersave="updateTeam(team.id)"  >
+               {{team.name}}
+               </a>
+               <span ng-click="deleteTeam(team.id)" ng-show="show_trash" class="glyphicon glyphicon-trash">
+               </span>
+               </span>
+            </div>
+            <div class="form-group">
+               <form ng-submit="addTeam()" style="margin-top:30px; width: 200px" >
+                  <h3>Add a new team</h3>
+                  <input type="text"
+                     class="form-control"
+                     placeholder="name"
+                     ng-model="name"></input>
+                  <button type="submit" class="btn btn-primary">Add Team</button>
+               </form>
+            </div>
+         </div>
 
-     <div class="row">
-       <div class="col-md-6 col-md-offset-3">
-         <ui-view></ui-view>
-       </div>
-     </div>
+         <div class="col-md-6">
+            <div>
+               <h3>Account section  </h3>
+               <div ng-repeat="acct in accounts">
+                  <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
+                  <a>
+                  {{acct.name}}
+                  </a>
+                  <span ng-click="deleteAccount(acct.id)" ng-show="show_trash"  class="glyphicon glyphicon-trash">
+                  </span>
+                  </span>
+               </div>
+            </div>
 
+            <div>
+               <form ng-submit="addAccount()" style="margin-top:30px; width: 200px" >
+                  <h3>Add a new team</h3>
+                  <input type="text"
+                     class="form-control"
+                     placeholder="name"
+                     ng-model="acct_name"></input>
+                  <button type="submit" class="btn btn-primary">Add Account</button>
+               </form>
+            </div>
+         </div>
+
+      </div>
+      <hr>
       <div class="row">
          <div class='col-md-6' style="min-height: 250px;">
             <div ng-repeat="team in teams "> 
                <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
                <a editable-text = "team.name" onaftersave="updateTeam(team.id)"  >
                {{team.name}}
-                </a>
-                  <span ng-click="deleteTeam(team.id)" ng-show="show_trash" class="glyphicon glyphicon-trash">
-                  </span>
+               </a>
                </span>
-            </div>
-            <div>
-               <form ng-submit="addTeam()"
-                  style="margin-top:30px; width: 200px">
-                  <h3>Add a new team</h3>
-                  <div class="form-group">
-                     <input type="text"
-                        class="form-control"
-                        placeholder="name"
-                        ng-model="name"></input>
-                  </div>
-                  <button type="submit" class="btn btn-primary" ng-mouseover= "team_hover_over();alert('hi')" ng-mouseleave="team_leave()">Add Team</button>
-               </form>
             </div>
             <!-- end teams -->
          </div>
@@ -40,8 +69,8 @@
                <a>
                {{employee.name}}
                </a>
-                  <span ng-click="deleteEmployee(employee.id)" ng-show="show_trash"  class="glyphicon glyphicon-trash">
-                  </span>
+               <span ng-click="deleteEmployee(employee.id)" ng-show="show_trash"  class="glyphicon glyphicon-trash">
+               </span>
                </span>
             </div>
             <div>
@@ -61,7 +90,6 @@
          </div>
          <!-- end teams col -->
       </div>
-
       <!-- end row -->
    </div>
    <!-- end container -->
