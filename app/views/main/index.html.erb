@@ -2,6 +2,15 @@
    <div class = "container">
       <div class="row">
          <div class="col-md-6">
+         
+            <script type="text/ng-template" id="tpl.html">
+              Content of the template.
+            </script>
+
+            <!-- <a ng-click="currentTpl='/tpl.html'" id="tpl-link">Load inlined template</a> -->
+            <div   ng-include="'tpl.html'"></div>
+         
+            <h5>Team List  </h5>
             <div ng-repeat="team in teams">
                <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
                <a editable-text = "team.name" onaftersave="updateTeam(team.id)"  >
@@ -13,7 +22,7 @@
             </div>
             <div class="form-group">
                <form ng-submit="addTeam()" style="margin-top:30px; width: 200px" >
-                  <h3>Add a new team</h3>
+                  <h6>Add a new team</h6>
                   <input type="text"
                      class="form-control"
                      placeholder="name"
@@ -25,7 +34,7 @@
 
          <div class="col-md-6">
             <div>
-               <h3>Account section  </h3>
+               <h5>Account List  </h5>
                <div ng-repeat="acct in accounts">
                   <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
                   <a>
@@ -39,7 +48,7 @@
 
             <div>
                <form ng-submit="addAccount()" style="margin-top:30px; width: 200px" >
-                  <h3>Add a new team</h3>
+                  <h6>Add a new Account</h6>
                   <input type="text"
                      class="form-control"
                      placeholder="name"
@@ -76,7 +85,7 @@
             <div>
                <form ng-submit="addEmployee()"
                   style="margin-top:30px; width:200px">
-                  <h3>Add a new employee</h3>
+                  <h6>Add a new employee</h6>
                   <div class="form-group">
                      <input type="text"
                         class="form-control"

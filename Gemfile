@@ -15,6 +15,8 @@ gem 'responders', '~> 2.0'
 
 gem 'libv8'
 
+gem "bower-rails", "~> 0.10.0"
+
 gem 'sass-rails'
 
 gem 'angular_rails_csrf'
