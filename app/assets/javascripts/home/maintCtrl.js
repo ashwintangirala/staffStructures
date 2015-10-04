@@ -10,15 +10,34 @@ app.controller('MainCtrl', [
 , 'account'
 , '$resource'
 , function($scope, employees, employee, teams, team, accounts, account, $resource){
-  $scope.test = 'Hello!';
 
-  $scope.posts = [
-  {title: 'post 1', type:"email"}
-  ,{title: 'post 2', type:"text"}
-  ,{title: 'post 3', type:"email"}
-  ,{title: 'post 4', type:"twtr"}
-  ,{title: 'post 5', type:"fb"}
-  ];
+  
+    $scope.message = "works?";
+    $scope.models = {
+        selected: null,
+        templates: ['car', 'product'],
+        dropzones: {
+            "A": [ 
+                   {type: 'container', id: 78
+                   , columns: [
+                         {type: 'item', id: 2}
+                       , {type: 'item', id: 7}
+                   ]
+                   }
+                 , {type: 'item', id: 3}
+                 , {type: 'item', id: 4}
+                 ]
+          ,  "B": [
+                {
+                    "type": "item",
+                    "id": 7
+                },
+                {
+                    "type": "item",
+                    "id": "8"
+                } ]
+        }
+  }
 
   $scope.teams = teams.query(); 
 
