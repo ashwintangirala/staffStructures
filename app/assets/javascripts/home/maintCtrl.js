@@ -15,17 +15,21 @@ app.controller('MainCtrl', [
     $scope.message = "works?";
     $scope.models = {
         selected: null,
-        templates: ['car', 'product'],
+        templates: [
+            {type: "item", id: 2},
+            {type: "container", id: 1, columns: [[], []]}
+        ],
         dropzones: {
             "A": [ 
-                   {type: 'container', id: 78
-                   , columns: [
+                   {"type": 'container'
+                   , id: 78
+                   , columns: [[
                          {type: 'item', id: 2}
-                       , {type: 'item', id: 7}
+                       , {type: 'item', id: 7}]
                    ]
                    }
-                 , {type: 'item', id: 3}
-                 , {type: 'item', id: 4}
+                 , {type: 'item', id: 9}
+                 , {type: 'item', id: 3} 
                  ]
           ,  "B": [
                 {
@@ -34,7 +38,7 @@ app.controller('MainCtrl', [
                 },
                 {
                     "type": "item",
-                    "id": "8"
+                    "id": 8
                 } ]
         }
   }

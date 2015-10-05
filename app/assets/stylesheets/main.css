@@ -2,13 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
 /**
  * For the correct positioning of the placeholder element, the dnd-list and
  * it's children must have position: relative
  */
-.nestedDemo ul[dnd-list],
-.nestedDemo ul[dnd-list] > li {
+
+ ul[dnd-list],
+ ul[dnd-list] > li {
 	position: relative;
 }
 
@@ -18,7 +18,7 @@
  * The dnd-list should always have a min-height,
  * otherwise you can't drop to it once it's empty
  */
-.nestedDemo .dropzone ul[dnd-list] {
+ .dropzone ul[dnd-list] {
     min-height: 42px;
     margin: 0px;
     padding-left: 0px;
@@ -31,7 +31,15 @@
  * half of the element we are dragging over. In other
  * browsers we can use event.offsetY for this.
  */
-.nestedDemo .dropzone li {
+
+.box-blue > h3 {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    background-image: -webkit-linear-gradient(top,#d9edf7 0,#c4e3f3 100%); 
+}
+
+ .dropzone li {
     background-color: #fff;
     border: 1px solid #ddd;
     display: block;
@@ -43,7 +51,7 @@
  * to see where he is dropping his element, even if the element is huge. The
  * .dndDragging class is automatically set during the drag operation.
  */
-.nestedDemo .dropzone .dndDragging {
+ .dropzone .dndDragging {
     opacity: 0.7;
 }
 
@@ -52,7 +60,7 @@
  * operation. It makes sense to hide it to give the user the feeling that he's
  * actually moving it. Note that the source element has also .dndDragging class.
  */
-.nestedDemo .dropzone .dndDraggingSource {
+ .dropzone .dndDraggingSource {
     display: none;
 }
 
@@ -60,7 +68,7 @@
  * An element with .dndPlaceholder class will be added as child of the dnd-list
  * while the user is dragging over it.
  */
-.nestedDemo .dropzone .dndPlaceholder {
+ .dropzone .dndPlaceholder {
     background-color: #ddd;
     min-height: 42px;
     display: block;
@@ -68,17 +76,16 @@
 }
 
 /***************************** Element Selection *****************************/
-
-.nestedDemo .dropzone .selected .item {
+ .dropzone .selected .item {
     color: #3c763d;
     background-color: #dff0d8;
 }
 
-.nestedDemo .dropzone .selected .box {
+ .dropzone .selected .box {
     border-color: #d6e9c6;
 }
 
-.nestedDemo .dropzone .selected .box > h3 {
+ .dropzone .selected .box > h3 {
     color: #3c763d;
     background-color: #dff0d8;
     background-image: linear-gradient(to bottom,#dff0d8 0,#d0e9c6 100%);
@@ -87,39 +94,16 @@
 
 /***************************** Element type specific styles *****************************/
 
-.nestedDemo .dropzone .item {
+ .dropzone .item {
     padding: 10px 15px;
 }
 
-.nestedDemo .dropzone .container-element {
+ .dropzone .container-element {
     margin: 10px;
+    /*background-image: linear-gradient(to bottom,#d9edf7 0,#c4e3f3 100%);*/
 }
 
-.nestedDemo .dropzone .container-element .column {
+ .dropzone .container-element .column {
     float: left;
     width: 50%;
 }
-
-/***************************** Toolbox *****************************/
-
-.nestedDemo .toolbox ul {
-    list-style: none;
-    padding-left: 0px;
-    cursor: move;
-}
-
-.nestedDemo .toolbox button {
-    margin: 5px;
-    width: 123px;
-    opacity: 1.0;
-}
-
-.nestedDemo .toolbox .dndDragging {
-    opacity: 0.5;
-}
-
-.nestedDemo .toolbox .dndDraggingSource {
-    opacity: 1.0;
-}
-
-
