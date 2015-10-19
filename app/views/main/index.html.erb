@@ -5,20 +5,20 @@
             <h5>Team List  </h5>
             <div ng-repeat="team in teams">
                <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
-               <a editable-text = "team.name" onaftersave="updateTeam(team.id)"  >
-               {{team.name}}
-               </a>
-               <span ng-click="deleteTeam(team.id)" ng-show="show_trash" class="glyphicon glyphicon-trash">
-               </span>
+                  <a editable-text = "team.name" onaftersave="updateTeam(team.id)"  >
+                     {{team.name}}
+                  </a>
+                  <span ng-click="deleteTeam(team.id)" ng-show="show_trash" class="glyphicon glyphicon-trash">
+                  </span>
                </span>
             </div>
             <div class="form-group">
                <form ng-submit="addTeam()" style="margin-top:30px; width: 200px" >
                   <h6>Add a new team</h6>
                   <input type="text"
-                     class="form-control"
-                     placeholder="name"
-                     ng-model="name"></input>
+                  class="form-control"
+                  placeholder="name"
+                  ng-model="name"></input>
                   <button type="submit" class="btn btn-primary">Add Team</button>
                </form>
             </div>
@@ -28,11 +28,11 @@
                <h5>Account List  </h5>
                <div ng-repeat="acct in accounts">
                   <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
-                  <a>
-                  {{acct.name}}
-                  </a>
-                  <span ng-click="deleteAccount(acct.id)" ng-show="show_trash"  class="glyphicon glyphicon-trash">
-                  </span>
+                     <a>
+                        {{acct.name}}
+                     </a>
+                     <span ng-click="deleteAccount(acct.id)" ng-show="show_trash"  class="glyphicon glyphicon-trash">
+                     </span>
                   </span>
                </div>
             </div>
@@ -40,9 +40,9 @@
                <form ng-submit="addAccount()" style="margin-top:30px; width: 200px" >
                   <h6>Add a new Account</h6>
                   <input type="text"
-                     class="form-control"
-                     placeholder="name"
-                     ng-model="acct_name"></input>
+                  class="form-control"
+                  placeholder="name"
+                  ng-model="acct_name"></input>
                   <button type="submit" class="btn btn-primary">Add Account</button>
                </form>
             </div>
@@ -50,38 +50,37 @@
       </div>
       
       <hr>
-
       <div class="row">
          <div class='col-md-6' style="min-height: 250px;">
-            <div ng-repeat="team in teams "> 
+            <div ng-repeat="team in teams ">
                <span style="font-size:20px; margin-left:10px;" >
-               <a  >
-               {{team.name}}
-               </a>
+                  <a  >
+                     {{team.name}}
+                  </a>
                </span>
             </div>
             <!-- end teams -->
          </div>
          <!-- end teams col -->
          <div class='col-md-6'>
-            <div ng-repeat="employee in employees "> 
+            <div ng-repeat="employee in employees ">
                <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
-               <a>
-               {{employee.name}}
-               </a>
-               <span ng-click="deleteEmployee(employee.id)" ng-show="show_trash"  class="glyphicon glyphicon-trash">
+                  <a>
+                     {{employee.name}}
+                  </a>
+                  <span ng-click="deleteEmployee(employee.id)" ng-show="show_trash"  class="glyphicon glyphicon-trash">
+                  </span>
                </span>
-               </span>
-            </div>    
+            </div>
             <div>
                <form ng-submit="addEmployee()"
                   style="margin-top:30px; width:200px">
                   <h6>Add a new employee</h6>
                   <div class="form-group">
                      <input type="text"
-                        class="form-control"
-                        placeholder="name"
-                        ng-model="emp_name"></input>
+                     class="form-control"
+                     placeholder="name"
+                     ng-model="emp_name"></input>
                   </div>
                   <button type="submit" class="btn btn-primary">Add Employee</button>
                </form>
@@ -92,41 +91,44 @@
       </div>
       <!-- end row -->
       <!-- begin scripts  -->
-
+      
       <script type="text/ng-template" id="display.html">
-         <ul dnd-list="list">
-             <li ng-repeat="item in list"
-                 dnd-draggable="item"
-                 dnd-effect-allowed="move"
-                 dnd-moved="list.splice($index, 1)"
-                 dnd-selected="models.selected = item"
-                 ng-class="{selected: models.selected === item}"
-                 ng-include="item.type +'.html'"> 
-             </li>
-         </ul> 
+      <ul dnd-list="list">
+         <li ng-repeat="item in list"
+            dnd-draggable="item"
+            dnd-effect-allowed="move"
+            dnd-moved="list.splice($index, 1)"
+            dnd-selected="models.selected = item"
+            ng-class="{selected: models.selected === item}"
+            ng-include="item.type +'.html'">
+         </li>
+      </ul>
       </script>
-
+      
       <script type="text/ng-template" id="container.html">
-         <div class= "container-element box blue-box"> 
-             <h3> Container {{item.id}} </h3>
-             <div class="column" ng-repeat="list in item.columns" ng-include="'display.html'"> a</div> 
-             <div class="clearfix"> </div> 
-         </div>
+      <div class= "container-element box box-blue">
+         <h3> Container {{item.id}} </h3>
+         <div class="column" ng-repeat="list in item.columns" ng-include="'display.html'"> </div>
+         <div class="clearfix"> </div>
+      </div>
       </script>
-
+      
       <script type="text/ng-template" id="item.html">
-         <div class="item"> item {{item.id}} </div> 
+      <div class="item"> item {{item.id}} </div>
       </script>
       <!-- end scripts  -->
 
-      <div class="row">
-         <div ng-repeat="(zone, list) in models.dropzones" class="col-md-6">
-            <div class="dropzone box box-yellow">
-               <h3>DropZone {{zone}}</h3>
-               <div ng-include="'display.html'"> </div>
+      <div class="teamsAccounts">
+         <div class="row">
+            <div ng-repeat="(zone, list) in models.dropzones" class="col-md-6">
+               <div class="dropzone box box-yellow">
+                  <h3> {{zone}}</h3>
+                  <div ng-include="'display.html'"> </div>
+               </div>
             </div>
          </div>
       </div>
+
    </div>
    <!-- end container -->
 </div>

@@ -11,7 +11,6 @@ app.controller('MainCtrl', [
 , '$resource'
 , function($scope, employees, employee, teams, team, accounts, account, $resource){
 
-  
     $scope.message = "works?";
     $scope.models = {
         selected: null,
@@ -20,7 +19,7 @@ app.controller('MainCtrl', [
             {type: "container", id: 1, columns: [[], []]}
         ],
         dropzones: {
-            "A": [ 
+            " Teams": [ 
                    {"type": 'container'
                    , id: 78
                    , columns: [[
@@ -31,7 +30,7 @@ app.controller('MainCtrl', [
                  , {type: 'item', id: 9}
                  , {type: 'item', id: 3} 
                  ]
-          ,  "B": [
+          ,  "Accounts": [
                 {
                     "type": "item",
                     "id": 7
@@ -71,7 +70,6 @@ app.controller('MainCtrl', [
   $scope.updateTeam = function(teamID){   
     team.update({id: teamID}); 
   };
-
 
   $scope.deleteTeam = function(teamID){
     
