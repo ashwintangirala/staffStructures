@@ -12,6 +12,7 @@
                   </span>
                </span>
             </div>
+
             <div class="form-group">
                <form ng-submit="addTeam()" style="margin-top:30px; width: 200px" >
                   <h6>Add a new team</h6>
@@ -23,6 +24,7 @@
                </form>
             </div>
          </div>
+
          <div class="col-md-6">
             <div>
                <h5>Account List  </h5>
@@ -36,6 +38,7 @@
                   </span>
                </div>
             </div>
+
             <div>
                <form ng-submit="addAccount()" style="margin-top:30px; width: 200px" >
                   <h6>Add a new Account</h6>
@@ -48,10 +51,12 @@
             </div>
          </div>
       </div>
-      
+
       <hr>
+
       <div class="row">
-         <div class='col-md-6' style="min-height: 250px;">
+         <div class='col-md-6' style="min-height: 250px;"> 
+
             <div ng-repeat="team in teams ">
                <span style="font-size:20px; margin-left:10px;" >
                   <a  >
@@ -59,9 +64,12 @@
                   </a>
                </span>
             </div>
+
+            {{account_v1}}
+
             <!-- end teams -->
-         </div>
-         <!-- end teams col -->
+         </div>   <!-- end teams col -->
+
          <div class='col-md-6'>
             <div ng-repeat="employee in employees ">
                <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
@@ -91,7 +99,7 @@
       </div>
       <!-- end row -->
       <!-- begin scripts  -->
-      
+
       <script type="text/ng-template" id="display.html">
       <ul dnd-list="list">
          <li ng-repeat="item in list"
@@ -104,7 +112,7 @@
          </li>
       </ul>
       </script>
-      
+
       <script type="text/ng-template" id="container.html">
       <div class= "container-element box box-blue">
          <h3> Container {{item.id}} </h3>
@@ -112,7 +120,7 @@
          <div class="clearfix"> </div>
       </div>
       </script>
-      
+
       <script type="text/ng-template" id="item.html">
       <div class="item"> item {{item.id}} </div>
       </script>
@@ -129,6 +137,6 @@
          </div>
       </div>
 
-   </div>
-   <!-- end container -->
+   </div> <!-- end container -->
+
 </div>
