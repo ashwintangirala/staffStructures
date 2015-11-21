@@ -2,179 +2,199 @@ var app =  angular.module('myApp');
 
 app.controller('MainCtrl', [
   '$scope'
-, 'employees'
-, 'employee'
-, 'teams'
-, 'team'
-, 'accounts'
-, 'account'
 , '$resource'
 , '$linq'
-, function($scope, employees, employee, teams, team, accounts, account, $resource, $linq){ 
+, function($scope, $resource, $linq){
 
-    $scope.message = "works?";
+/*
 
-    $scope.account_raw_data=[
-    {name:'goldman', volume: 10, region: 'Asia', country:'HK'},
-    {name:'goldman', volume: 34, region: 'EMEA', country:'Sweden'},
-    {name:'perry', volume: 23, region: 'EMEA', country:'Denmark'},
-    {name:'perry', volume: 20, region: 'Americas', country:'USA'}]; 
+framework - models array 
+1. the research team section and account section should be structured based on 
+the models array 
 
-    var account_v1= 
-    [
-    {name:'goldman', volume: 10, price: 10},
-    {name:'perry', volume: 34, price: 10}
-    ];
+data model 
+data that we read
+1. account raw data
+  cols: name id, region, country, pa 
+2. research team raw data
 
-    var acct_models = 
-    {
-      templates: null 
-      , selected: null
-      , zones: { "a": [], "b": [] }
-    };
+intermediate arrays
+1. account agg - takes account raw data, groups by account id and name
+options
+  details
+  default should populate regions with all, and PAs with all 
+  , however, it should 
 
-    var z = { "a": [], "c": [] }
+a) user should be able to split account by regions and PAs, the combinations they 
+come up with should be reflected in this array (account agg)
 
-    var dataString=[ 
-     { category : "Search Engines", machine: 'p', "hits" : 1, "bytes" : 10000 },
-     { category : "Content Server", machine: 'p', "hits" : 1, "bytes" : 10000 },
-     { category : "Content Server", machine: 'p', "hits" : 1, "bytes" : 10000 },
-     { category : "Search Engines", machine: 'p', "hits" : 1, "bytes" : 10000 },
-     { category : "Business", machine: 'a', "hits" : 1, "bytes" : 10000 },
-     { category : "Content Server", machine: 'a', "hits" : 1, "bytes" : 10000 },
-     { category : "Internet Services", machine: 'a', "hits" : 1, "bytes" : 10000 },
-     { category : "Search Engines", machine: 'a', "hits" : 1, "bytes" : 10000 },
-     { category : "Search Engines", machine: 'a', "hits" : 1, "bytes" : 10000 } 
-    ];
+2. research team agg - should consume research team raw data and group by team, BU. 
+should provide FTEs, the ultimate value should be adjustable
 
-    //     var dataString=[ 
-    //  { "category" : "Search Engines", "hits" : 1, "bytes" : 10000 },
-    //  { "category" : "Content Server", "hits" : 1, "bytes" : 10000 },
-    //  { "category" : "Content Server", "hits" : 1, "bytes" : 10000 },
-    //  { "category" : "Search Engines", "hits" : 1, "bytes" : 10000 },
-    //  { "category" : "Business", "hits" : 1, "bytes" : 10000 },
-    //  { "category" : "Content Server", "hits" : 1, "bytes" : 10000 },
-    //  { "category" : "Internet Services", "hits" : 1, "bytes" : 10000 },
-    //  { "category" : "Search Engines", "hits" : 1, "bytes" : 10000 },
-    //  { "category" : "Search Engines", "hits" : 1, "bytes" : 10000 } 
-    // ];
-    // // debugger;
+output arrays
+*/
 
-    // var aggregatedObject = enumerator.From(dataString)
-    //     .GroupBy("$.category", null,
-    //              function (key, g) {
-    //                  return {
-    //                    category: key,
-    //                    hits: g.Sum("$.hits"),
-    //                    bytes: g.Sum("$.bytes")
-    //                  }
-    //     })
-    //     .ToArray();
+enumerator = $linq.Enumerable();
 
-    enumerator = $linq.Enumerable();
+/* process research teams */
+// {type: "team", id: 1, name: 'a', ftes: 10, expected_tpv:19, columns: [[], []]}
 
-    var aggregatedObject = enumerator.From(dataString)
-        .GroupBy("$.category", null,
-                 function (key, g) {
+var team_raw_data = [
+   { team_id: 1, team: 'Mck Other', emp_name: 'rachel hinds',  fte: 1}
+,  { team_id: 2, team: 'Mck CGS EI', emp_name: 'rachel loebl', fte: 1 }
+,  { team_id: 3, team: 'Bain Other', emp_name: 'Leo Queralt',  fte: 1 }
+,  { team_id: 3, team: 'Bain Other', emp_name: 'Katie Weaver', fte: 1 }
+
+,  { team_id: 4, team: 'HC Growth', emp_name: 'Melissa Nezamzadeh', fte: 1 }
+,  { team_id: 4, team: 'HC Growth', emp_name: 'Beth Sapire', fte: 1 }
+,  { team_id: 4, team: 'HC Growth', emp_name: 'Beth Sapire', fte: 1 }
+,  { team_id: 5, team: 'Growth A', emp_name: 'Peter Calvanelli', fte: 1 }
+,  { team_id: 5, team: 'Growth A', emp_name: 'Gabbi Lewin' , fte: 1 }
+];
+
+  var team_agg = enumerator.From(team_raw_data)
+      .GroupBy("{team_id: $.team_id, team: $.team}", null,
+               function (key, g) {
+                   return {
+                     team: key.team,
+                     team_id: key.team_id, 
+                     fte: g.Sum("$.fte")
+                   }
+              },
+              "$.team_id + '-' + $.team"
+      )
+      .ToArray();
+
+  team_agg.forEach(function(item){
+    item.productivity = 60;
+    item.assigned_tpv = 0;
+    item.type= "team"; 
+    item.columns = [ [ ] ]; 
+  });
+
+  team_agg.forEach(function(item){
+    item.expected_tpv = item.productivity* item.fte;
+  }); 
+
+/* end process research teams */ 
+
+/* process accounts */ 
+    var account_raw_data = [
+    { id: 10, name:'goldman', volume: 10, region: 'Asia', country:'HK', pa: 'hc'},
+    { id: 10, name:'goldman', volume: 34, region: 'EMEA', country:'Sweden', pa:'tmt'},
+    { id: 11, name:'perry', volume: 23, region: 'EMEA', country:'Denmark', pa:'hc'},
+    { id: 11, name:'perry', volume: 20, region: 'Americas', country:'USA', pa:'tmt'}];
+/* process accounts */
+
+    var account_agg = enumerator.From(account_raw_data)
+        .GroupBy("{id: $.id, name: $.name}", null,
+                 function (key, g) { 
                      return {
-                       category: key,
-                       hits: g.Sum("$.hits"),
-                       bytes: g.Sum("$.bytes")
+                       name: key.name,
+                       id: key.id, 
+                       TPV: g.Sum("$.volume")
                      }
-        })
+                },
+                "$.id + '-' + $.name"
+        )
         .ToArray();
 
-    acct_models.zones = dataString;
+//modifying account_agg_pre to match fields in below p_models.templates.account type 
 
-    $scope.account_v1 = aggregatedObject;
+    account_agg.forEach(function(item){
+      item.type = "account"; 
+      item.region = 'all'; 
+      item.pa = 'all';
+      item.expected_tpv = item.TPV; 
+      item.growth=.2;
+    });
+/* end process accounts */
 
-    $scope.models = {
+
+/* process model */
+    var p_models = {
         selected: null,
         templates: [
-            {type: "item", id: 2},
-            {type: "container", id: 1, columns: [[], []]}  
+            {type: "account", name:'abc', id: 2, tpv: 12, region: 'all', pa: 'all', expected_tpv: 0, growth: .1},
+            {type: "team", team_id: 1, team: 'a', fte: 10, productivity: 60, expected_tpv:19, columns: []}
+            // [[], []] 
         ],
         dropzones: {
-            " Teams": [ 
-                   {type: 'container'
-                   , id: 78
-                   , columns: [[
-                         {type: 'item', id: 2}
-                       , {type: 'item', id: 7}]
-                   ]
+            Teams: [ 
+                   { type: 'team'
+                   , team_id: 78
+                   , team: 'mck other'
+                   , fte: 1 
+                   , productivity: 50 
+                   , assigned_tpv: 10
+                   , expected_tpv: 60
+                   , columns: [ [ ] ]
                    }
-                  
-                  , {type: 'container' 
-                     , id: 78 
-                     , columns: [[
-                         {type: 'item', id: 2}
-                       , {type: 'item', id: 7}
-                       ]]
+                   , { type: 'team' 
+                   , team: 'bain other'
+                     , team_id: 78 
+                     , columns: [  ]
                    }
                  ]
-          ,  "Accounts": [
+          ,  _Accounts: [
                 {
-                    "type": "item",
-                    "id": 7
+                    name: 'abcc',
+                    id: 9,
+                    tpv: 12, 
+                    type: "account",
+                    region: 'all', 
+                    pa: 'all' 
                 },
                 {
-                    "type": "item",
-                    "id": 8
+                    "type": "account",
+                    name: 'abcc', 
+                    "id": 8,
+                    tpv: 12, 
+                    region: 'all', 
+                    pa: 'all'
                 }]
         }
   }
+/* end process model */
 
-  $scope.teams = teams.query(); 
+  p_models.dropzones._Accounts = account_agg; 
 
-  $scope.employees = employees.query(); 
+  p_models.dropzones.Teams = team_agg; 
 
-  $scope.accounts = accounts.query(); 
+// console.log(account_agg_pre);
+/* account variables */
 
-  $scope.addAccount = function(){
-    var new_acct= accounts.create( {name: $scope.acct_name} ) ;
-    $scope.accounts.push(new_acct); 
-    $scope.acct_name = ''; 
+/* end account variables */
+
+/* account functions */
+
+  var calc_growth = function (x){
+
+    return parseFloat(x) + parseFloat(1) ; 
+    //parseInt(x) + parseInt(y)  ;
   }
 
-  $scope.deleteAccount = function(acctID){
-    
-    account.delete( {id: acctID} ); 
-    $scope.accounts = accounts.query();
-  };
-  
-  $scope.addTeam = function(){
-    var new_team = teams.create( {name: $scope.name} ) ;
-    $scope.teams.push(new_team); 
-    $scope.name = ''; 
+  $scope.angular_growth = calc_growth; 
+
+/* end account functions */ 
+
+  $scope.account_v1 = account_agg;
+
+  $scope.team_v1 = team_agg; 
+
+  $scope.models = p_models; 
+
+  $scope.func = function(obj){
+     var demand = 0; 
+    // debugger;
+    // returns length of array: obj.columns[0].length;
+    //obj..foreach()
+    obj.columns[0].forEach(function(item){
+      demand += (item.expected_tpv * calc_growth(item.growth) )   
+    }); 
+
+    return demand;  
   }
 
-  $scope.updateTeam = function(teamID){   
-    team.update({id: teamID}); 
-  };
-
-  $scope.deleteTeam = function(teamID){
-    team.delete( {id: teamID} ); 
-    $scope.teams = teams.query();
-  };
-
-  $scope.deleteEmployee = function(empID){
-    employee.delete( {id: empID} ); 
-    $scope.employees = employees.query();
-  };
-
-  $scope.a = {}; 
-
-  $scope.team_hover_over  = function(index ){
-    this.show_trash = true;
-  }
-
-  $scope.team_leave  = function( ){
-    this.show_trash = false; 
-  }
-
-  $scope.addEmployee = function(){
-    var new_emp = employees.create( {name: $scope.emp_name} ) ;
-    $scope.employees.push(new_emp); 
-    $scope.emp_name = '';  
-  }
 }])
+

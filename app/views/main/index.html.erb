@@ -1,104 +1,34 @@
 <div ng-controller="MainCtrl">
-   <div class = "container">
-      <div class="row">
-         <div class="col-md-6">
-            <h5>Team List  </h5>
-            <div ng-repeat="team in teams">
-               <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
-                  <a editable-text = "team.name" onaftersave="updateTeam(team.id)"  >
-                     {{team.name}}
-                  </a>
-                  <span ng-click="deleteTeam(team.id)" ng-show="show_trash" class="glyphicon glyphicon-trash">
-                  </span>
-               </span>
-            </div>
-
-            <div class="form-group">
-               <form ng-submit="addTeam()" style="margin-top:30px; width: 200px" >
-                  <h6>Add a new team</h6>
-                  <input type="text"
-                  class="form-control"
-                  placeholder="name"
-                  ng-model="name"></input>
-                  <button type="submit" class="btn btn-primary">Add Team</button>
-               </form>
-            </div>
-         </div>
-
-         <div class="col-md-6">
-            <div>
-               <h5>Account List  </h5>
-               <div ng-repeat="acct in accounts">
-                  <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
-                     <a>
-                        {{acct.name}}
-                     </a>
-                     <span ng-click="deleteAccount(acct.id)" ng-show="show_trash"  class="glyphicon glyphicon-trash">
-                     </span>
-                  </span>
-               </div>
-            </div>
-
-            <div>
-               <form ng-submit="addAccount()" style="margin-top:30px; width: 200px" >
-                  <h6>Add a new Account</h6>
-                  <input type="text"
-                  class="form-control"
-                  placeholder="name"
-                  ng-model="acct_name"></input>
-                  <button type="submit" class="btn btn-primary">Add Account</button>
-               </form>
-            </div>
-         </div>
-      </div>
-
-      <hr>
-
+   <div class = "container"> 
       <div class="row">
          <div class='col-md-6' style="min-height: 250px;"> 
 
-            <div ng-repeat="team in teams ">
-               <span style="font-size:20px; margin-left:10px;" >
-                  <a  >
-                     {{team.name}}
-                  </a>
-               </span>
-            </div>
+          <br><br><br><br><br><br>
 
-            {{account_v1}}
+          <h4> accounts </h4>
 
-            <!-- end teams -->
+          {{models.dropzones._Accounts}}
+
+          <br>
+          <h4> teams </h4>
+
+          {{team_v1}}
+
+         <!-- end teams -->
          </div>   <!-- end teams col -->
 
          <div class='col-md-6'>
-            <div ng-repeat="employee in employees ">
-               <span style="font-size:20px; margin-left:10px;" ng-mouseover= "team_hover_over();" ng-mouseleave="team_leave()">
-                  <a>
-                     {{employee.name}}
-                  </a>
-                  <span ng-click="deleteEmployee(employee.id)" ng-show="show_trash"  class="glyphicon glyphicon-trash">
-                  </span>
-               </span>
-            </div>
-            <div>
-               <form ng-submit="addEmployee()"
-                  style="margin-top:30px; width:200px">
-                  <h6>Add a new employee</h6>
-                  <div class="form-group">
-                     <input type="text"
-                     class="form-control"
-                     placeholder="name"
-                     ng-model="emp_name"></input>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Add Employee</button>
-               </form>
-            </div>
-            <!-- end teams -->
+             <h4> testing a function </h4>
+             {{getTeamDemand()}}
+             <br>
+
+             {{models.dropzones.Teams[0].columns[0][0].name}}
+
          </div>
          <!-- end teams col -->
       </div>
       <!-- end row -->
-      <!-- begin scripts  -->
+      <!-- begin scripts -->
 
       <script type="text/ng-template" id="display.html">
       <ul dnd-list="list">
@@ -113,30 +43,43 @@
       </ul>
       </script>
 
-      <script type="text/ng-template" id="container.html">
+      <script type="text/ng-template" id="team.html">
       <div class= "container-element box box-blue">
-         <h3> Container {{item.id}} </h3>
+         <h3> {{item.team}} &nbsp&nbsp FTEs: {{item.fte}} 
+         &nbsp&nbsp Productivity: <input type='text' ng-model="item.productivity" style="width:10%;"/>
+         &nbsp&nbsp Supply: {{item.fte * item.productivity | number:0}} 
+         &nbsp&nbsp Demand: {{ func(item)  | number: 0}} 
+         </h3>
+
          <div class="column" ng-repeat="list in item.columns" ng-include="'display.html'"> </div>
          <div class="clearfix"> </div>
-      </div>
+      </div>      
       </script>
 
-      <script type="text/ng-template" id="item.html">
-      <div class="item"> item {{item.id}} </div>
+
+      <script type="text/ng-template" id="account.html"> 
+      <div class="item">
+      {{item.name}}  Last Quarter TPV: {{item.TPV}}
+      <br>
+      Expected Growth:  &nbsp  <input ng-model="item.growth" type="text"  style="width: 10%;" />
+      <br>
+      Expected Demand: {{ item.expected_tpv * angular_growth(item.growth) | number: 0}}
+       </div>
+
       </script>
-      <!-- end scripts  -->
+      <!-- end scripts -->
 
       <div class="teamsAccounts">
          <div class="row">
-            <div ng-repeat="(zone, list) in models.dropzones" class="col-md-6">
+            <div ng-repeat="(zone, list) in models.dropzones " class="col-md-6">
                <div class="dropzone box box-yellow">
                   <h3> {{zone}}</h3>
                   <div ng-include="'display.html'"> </div>
                </div>
             </div>
          </div>
-      </div>
-
+      </div> 
    </div> <!-- end container -->
 
 </div>
+
