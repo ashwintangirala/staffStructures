@@ -182,7 +182,9 @@ var team_raw_data = [
 
   $scope.team_v1 = team_agg; 
 
-  $scope.models = p_models; 
+  $scope.models = p_models;
+
+  $scope.loop = [1, 2, 3, 4, 5];  
 
   $scope.func = function(obj){
      var demand = 0; 

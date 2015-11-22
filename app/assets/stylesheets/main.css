@@ -118,6 +118,7 @@
 
 .teamsAccounts .dropzone .item {
     padding: 10px 15px;
+    height: 80px;
 }
 
 .teamsAccounts .dropzone .container-element {
@@ -128,5 +129,4 @@
     float: left;
     width: 50%;
 }
-
 
