@@ -1,9 +1,13 @@
 <div ng-controller="MainCtrl">
    <div class = "container"> 
-      <div class="row">
-         <div class='col-md-6' style="min-height: 250px;"> 
 
-          <br><br><br><br><br><br>
+   <button ng-click="settings();">show settings</button> 
+
+
+      <div class="row" ng-hide="show_settings">
+
+         <div class='col-md-4' style="min-height: 250px;"> 
+
 
           <h4> accounts </h4>
 
@@ -17,7 +21,7 @@
          <!-- end teams -->
          </div>   <!-- end teams col -->
 
-         <div class='col-md-6'>
+         <div class='col-md-4'>
              <h4> testing a function </h4>
              {{getTeamDemand()}}
              <br>
@@ -25,11 +29,16 @@
              {{models.dropzones.Teams[0].columns[0][0].name}}
 
          </div>
+
+         <div class='col-md-4'>
+         <h4> notes </h4>
+
+         </div>
          <!-- end teams col -->
       </div>
       <!-- end row -->
-      <!-- begin scripts -->
 
+      <!-- begin scripts -->
       <script type="text/ng-template" id="display.html">
       <ul dnd-list="list">
          <li ng-repeat="item in list"
@@ -38,125 +47,183 @@
             dnd-moved="list.splice($index, 1)"
             dnd-selected="models.selected = item"
             ng-class="{selected: models.selected === item}"
-            ng-include="item.type +'.html'">
+            ng-include= "item.type +'.html' ">
          </li>
-      </ul> 
+      </ul>
       </script>
-
 
 
       <script type="text/ng-template" id="team.html">
          <div class= "container-element box box-blue">
             <h3> {{item.team}} &nbsp&nbsp FTEs: {{item.fte}} 
-            &nbsp&nbsp Productivity: <input type='text' ng-model="item.productivity" style="width:10%;"/>
+            &nbsp&nbsp Wins/FTE: <input type='text' ng-model="item.productivity" style="width:10%;"/>
             &nbsp&nbsp Supply: {{item.fte * item.productivity | number:0}} 
             &nbsp&nbsp Demand: {{ func(item)  | number: 0}} 
             </h3> 
-            <div class="column" ng-repeat="list in item.columns" ng-include="'display.html'"> </div>
+            <div   ng-repeat="list in item.columns" ng-include="'display.html'"> </div>
             <div class="clearfix"> </div>
-         </div>      
-      </script>
-
-      <script type="text/ng-template" id="team3.html">
-         <div class= "container-element box box-blue">
-            <h3> {{item.team}} &nbsp&nbsp FTEs: {{item.fte}} 
-            &nbsp&nbsp Productivity: <input type='text' ng-model="item.productivity" style="width:10%;"/>
-            &nbsp&nbsp Supply: {{item.fte * item.productivity | number:0}} 
-            &nbsp&nbsp Demand: {{ func(item)  | number: 0}} 
-            </h3> 
-
-             <div class="column" ng-repeat="list in item.columns" > 
-                  <ul dnd-list="list">
-                     <li ng-repeat="item in list"
-                        dnd-draggable="item"
-                        dnd-effect-allowed="move"
-                        dnd-moved="list.splice($index, 1)"
-                        dnd-selected="models.selected = item"
-                        ng-class="{selected: models.selected === item}"
-                        ng-include="'account.html'">
-                     </li>
-                  </ul>  
-             </div> 
-            <div class="clearfix"> </div>
-         </div>  
-      </script>
-
-
-      <script type="text/ng-template" id="team2.html">
-         <div class= "container-element box box-blue">
-            <h3> {{item.team}} &nbsp&nbsp FTEs: {{item.fte}} 
-            &nbsp&nbsp Productivity: <input type='text' ng-model="item.productivity" style="width:10%;"/>
-            &nbsp&nbsp Supply: {{item.fte * item.productivity | number:0}} 
-            &nbsp&nbsp Demand: {{ func(item)  | number: 0}} 
-            </h3> 
-            <div class="column" ng-repeat="list in item.columns" ng-include="'display.html'"> </div>
-            <div class="clearfix"> </div>
-         </div>      
-      </script>
-
+         </div> 
+      </script> 
 
       <script type="text/ng-template" id="account.html"> 
       <div class="item"> 
-         {{item.name}}  
-         <br>
-         Last Quarter TPV: {{item.TPV}} Expected Growth:  &nbsp  <input ng-model="item.growth" type="text"  style="width: 10%;"/>
-         <br>
+
+         <div class="col-md-3">
+            <div class="nameBox">
+                {{item.name}}  
+            </div>
+         </div>
+
+         <div class="col-md-3"> 
+         Last Quarter TPV: {{item.TPV}}  
+         </div>
+
+         <div class="col-md-3"> 
+         Expected Growth:  <br>  <input ng-model="item.growth" type="text"  style="width: 40%; text-algin:center;"/>
+         </div>
+
+         <div class="col-md-3"> 
          Expected Demand: {{ item.expected_tpv * angular_growth(item.growth) | number: 0}}
+         </div>
+
        </div> 
       </script>
       <!-- end scripts -->
 
 
-      <div class="teamsAccounts">
-         <div id="testingList" class="row">
-            <div class="col-md-6" > 
-               <div class="dropzone box box-yellow">
-                  <h3> Teams </h3> 
-                  
-                  <ul dnd-list="list">
-                     <li ng-repeat="item in models.dropzones.Teams"
-                        dnd-draggable="item"
-                        dnd-effect-allowed="move"
-                        dnd-moved="list.splice($index, 1)"
-                        dnd-selected="models.selected = item"
-                        ng-class="{selected: models.selected === item}" 
-                        ng-include="'team3.html'"> 
-                     </li>
-                  </ul>                   
-               </div>
-            </div>
+<hr>
 
-            <div class="col-md-6">
-               <div class="dropzone box box-yellow">
-                  <h3> Accounts </h3>
-                  <ul dnd-list="list">
-                     <li ng-repeat="item in models.dropzones._Accounts"
-                        dnd-draggable="item"
-                        dnd-effect-allowed="move"
-                        dnd-moved="list.splice($index, 1)"
-                        dnd-selected="models.selected = item"
-                        ng-class="{selected: models.selected === item}" 
-                        ng-include="'team3.html'">
-                     </li>
-                  </ul>
-               </div>
+      <div class="row" id="tabs_layout">
 
-            </div>            
-         </div>
+        <ul class="nav nav-pills">
+            <li ng-class="{ active: isSet(1) }">
+                <a href ng-click="setTab(1)">Targets</a>
+            </li>
+            <li ng-class="{ active: isSet(2) }">
+                <a href ng-click="setTab(2)">Holidays</a>
+            </li>
+
+        </ul>
+
       </div>
 
-      <br> 
-      
-      <div class="teamsAccounts">
-         <div class="row">
-            <div ng-repeat="(zone, list) in models.dropzones" class="col-md-6">
-               <div class="dropzone box box-yellow">
-                  <h3> {{zone}}</h3>
-                  <div ng-include="'display.html'"> </div>
-               </div>
+      <div class="row">
+        <!-- tab example based on http://codepen.io/jasoncluck/pen/iDcbh
+             should replace with https://scotch.io/tutorials/angular-routing-using-ui-router
+        -->
+
+        <div id="target setting" ng-show="isSet(1)">
+
+          <div class="row top-buffer">          
+          </div>
+
+         <div class="row" style="margin-left: 5px;">
+            Select BU: <input type="dropdown"> </input>  
+            <br>
+
+            <!-- {{lo_test}} -->
+         </div>  
+
+          <div class="row top-buffer">          
+          </div>
+
+
+          <div class="teamsAccounts">
+             <div class="row">
+                <div ng-repeat="(zone, list) in models.dropzones" class="col-md-6">
+                   <div class="dropzone box box-yellow">
+                      <h3> {{zone}}</h3>
+                      <div ng-include="'display.html'"> </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+
+        </div>
+
+        <div id="businessdays" ng-show="isSet(2)">
+          <div class="row top-buffer">
+
+          <div class="col-md-3">
+
+            <div class="row" style="margin-left: 30px;">
+            select country
             </div>
-         </div>
+
+            <div class="row" style="margin-left: 20px; margin-top: 10px">
+              <select ng-model="c.id" 
+                ng-options="c.country for c in countries">
+              </select>
+            </div>
+
+          </div>
+          
+          <div class="col-md-3">
+
+            <div class="row">
+            select date
+            </div>
+
+            <div class="row" style="margin-top: 10px">
+              <md-datepicker ng-model="birthday"></md-datepicker>
+            </div>
+
+          </div>
+
+          <div class="col-md-3">
+
+            <div class="row">
+            Description
+            </div>
+
+            <div class="row" style=" margin-top: 10px">
+              <input type="text"> </input>
+            </div>
+
+          </div>
+
+          <div class="col-md-3">
+
+            <div class="row" style="margin-left: 10px;">
+            <button type="button" class="btn btn-primary" style="height:50px;"> Save Holiday </button> 
+            </div>
+
+          </div>
+
+
+          </div>
+          <div class="row">
+
+            <div class="row top-buffer" >
+
+            </div>
+            <div class="row top-buffer" style="margin-left: 10px;">
+
+              <div class="col-md-6">
+                <table st-table="rowCollection" class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="row in holidays">
+                    <td>{{row.day}}</td>
+                    <td>{{row.description}}</td>
+
+                  </tr>
+                  </tbody>
+                </table> 
+              </div>
+
+            </div>
+          </div>
+          <br><br><br><br><br><br>          
+        </div>
+
       </div>
+
 
 
    </div> 
@@ -164,11 +231,14 @@
 <!-- end container -->
 
 <!-- 
-ng-include="team.html"
+dnd-moved="list.splice($index, 1)"
 
-dnd-moved="loop.splice($index, 1)"
+ng-include="team.html"
+dnd-draggable="item"
+
 dnd-selected="models.selected = item"
 
+dnd-moved="models.dropzones._Accounts.splice($index, 1)"
 
    <ul dnd-list="aList"  >
       <li ng-repeat='item in models.dropzones.Teams'

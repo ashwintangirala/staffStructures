@@ -5,7 +5,6 @@ app.controller('MainCtrl', [
 , '$resource'
 , '$linq'
 , function($scope, $resource, $linq){
-
 /*
 
 framework - models array 
@@ -32,7 +31,60 @@ come up with should be reflected in this array (account agg)
 should provide FTEs, the ultimate value should be adjustable
 
 output arrays
+
+
+
 */
+
+/* UI */ 
+    
+    $scope.settings = function(){
+      if(this.show_settings==false)
+        {this.show_settings=true; }
+      else this.show_settings = false; 
+
+    }; 
+
+    $scope.show_settings =false; 
+
+    $scope.tab = 2;
+
+    $scope.setTab = function(newTab){
+      $scope.tab = newTab;
+    };
+
+    $scope.isSet = function(tabNum){
+      return $scope.tab === tabNum;
+    };
+
+/* end UI */  
+
+/* data for holidays */ 
+
+    $scope.countries = [
+        {country: 'Australia', abbreviation: 'AU', id: 867},
+        {country: 'China', abbreviation: 'CN', id: 899 },
+        {country: 'France', abbreviation: 'FR', id: 930 },
+        {country: 'Germany', abbreviation: 'DE', id: 937 },
+        {country: 'Hong Kong', abbreviation: 'HK', id: 953 },
+        {country: 'India', abbreviation: 'IN', id: 956 },
+        {country: 'Ireland', abbreviation: 'IE', id: 958 },
+        {country: 'Japan', abbreviation: 'JP', id: 962 },
+        {country: 'Singapore', abbreviation: 'SG', id: 1045 },
+        {country: 'South Korea', abbreviation: 'KR', id: 1052 },
+        {country: 'United Arab Emirates', abbreviation: 'AE', id: 1078 },
+        {country: 'United Kingdom', abbreviation: 'GB', id: 1079 },
+        {country: 'United States', abbreviation: 'US', id: 1080 },
+    ];
+
+    $scope.holidays = [
+    {country_id: 1080, date: '20150101', description: 'this is a holiday'}
+
+,    {country_id: 1078, date: '20150101', description: 'this is a holiday'}
+
+    ];
+
+/* end data for holidays */ 
 
 enumerator = $linq.Enumerable();
 
@@ -40,17 +92,31 @@ enumerator = $linq.Enumerable();
 // {type: "team", id: 1, name: 'a', ftes: 10, expected_tpv:19, columns: [[], []]}
 
 var team_raw_data = [
-   { team_id: 1, team: 'Mck Other', emp_name: 'rachel hinds',  fte: 1}
-,  { team_id: 2, team: 'Mck CGS EI', emp_name: 'rachel loebl', fte: 1 }
-,  { team_id: 3, team: 'Bain Other', emp_name: 'Leo Queralt',  fte: 1 }
-,  { team_id: 3, team: 'Bain Other', emp_name: 'Katie Weaver', fte: 1 }
+   {business_unit: 'b', pod: "cgs", team_id: 1, team: 'Mck Other', emp_name: 'rachel hinds',  fte: 1}
+,  {business_unit: 'b', pod: "cgs", team_id: 2, team: 'Mck CGS EI', emp_name: 'rachel loebl', fte: 1 }
+,  {business_unit: 'b', pod: "cgs", team_id: 3, team: 'Bain Other', emp_name: 'Leo Queralt',  fte: 1 }
+,  {business_unit: 'b', pod: "cgs", team_id: 3, team: 'Bain Other', emp_name: 'Katie Weaver', fte: 1 }
 
-,  { team_id: 4, team: 'HC Growth', emp_name: 'Melissa Nezamzadeh', fte: 1 }
-,  { team_id: 4, team: 'HC Growth', emp_name: 'Beth Sapire', fte: 1 }
-,  { team_id: 4, team: 'HC Growth', emp_name: 'Beth Sapire', fte: 1 }
-,  { team_id: 5, team: 'Growth A', emp_name: 'Peter Calvanelli', fte: 1 }
-,  { team_id: 5, team: 'Growth A', emp_name: 'Gabbi Lewin' , fte: 1 }
-];
+,  {business_unit: 'a', pod: "cgs", team_id: 4, team: 'HC Growth', emp_name: 'Melissa Nezamzadeh', fte: 1 }
+,  {business_unit: 'a', pod: "cgs", team_id: 4, team: 'HC Growth', emp_name: 'Beth Sapire', fte: 1 }
+,  {business_unit: 'a', pod: "cgs", team_id: 4, team: 'HC Growth', emp_name: 'Beth Sapire', fte: 1 }
+,  {business_unit: 'a', pod: "cgs", team_id: 5, team: 'Growth A', emp_name: 'Peter Calvanelli', fte: 1 }
+,  {business_unit: 'a', pod: "cgs", team_id: 5, team: 'Growth A', emp_name: 'Gabbi Lewin' , fte: 1 }
+]; 
+
+/*  filter data */ 
+
+  var grp1 =  _.groupBy(
+     _.map(team_raw_data, function(item){
+    return _.pick(item, ['business_unit', 'pod', 'team']); 
+  })
+     , 'business_unit');
+
+
+  $scope.lo_test = grp1; 
+
+/* end filter data */ 
+
 
   var team_agg = enumerator.From(team_raw_data)
       .GroupBy("{team_id: $.team_id, team: $.team}", null,
@@ -75,8 +141,10 @@ var team_raw_data = [
   team_agg.forEach(function(item){
     item.expected_tpv = item.productivity* item.fte;
   }); 
-
 /* end process research teams */ 
+
+
+
 
 /* process accounts */ 
     var account_raw_data = [
@@ -107,11 +175,12 @@ var team_raw_data = [
       item.pa = 'all';
       item.expected_tpv = item.TPV; 
       item.growth=.2;
+
     });
 /* end process accounts */
 
 
-/* process model */
+/* structure for account team model */
     var p_models = {
         selected: null,
         templates: [
@@ -155,16 +224,18 @@ var team_raw_data = [
                 }]
         }
   }
-/* end process model */
+/* end structure for account team model */
+
+
+/* initialize account team model */
 
   p_models.dropzones._Accounts = account_agg; 
 
   p_models.dropzones.Teams = team_agg; 
 
-// console.log(account_agg_pre);
-/* account variables */
+  $scope.models = p_models;
 
-/* end account variables */
+/* end initialize account team model */
 
 /* account functions */
 
@@ -176,16 +247,6 @@ var team_raw_data = [
 
   $scope.angular_growth = calc_growth; 
 
-/* end account functions */ 
-
-  $scope.account_v1 = account_agg;
-
-  $scope.team_v1 = team_agg; 
-
-  $scope.models = p_models;
-
-  $scope.loop = [1, 2, 3, 4, 5];  
-
   $scope.func = function(obj){
      var demand = 0; 
     // debugger;
@@ -194,6 +255,8 @@ var team_raw_data = [
     obj.columns[0].forEach(function(item){
       demand += (item.expected_tpv * calc_growth(item.growth) )   
     }); 
+
+/* end account functions */
 
     return demand;  
   }

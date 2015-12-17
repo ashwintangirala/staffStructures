@@ -138,7 +138,7 @@ angular.module('dndLists', [])
           $parse(attr.dndDragend)(scope, {event: event, dropEffect: dropEffect});
         });
 
-        // Clean up
+
         element.removeClass("dndDragging");
         $timeout(function() { element.removeClass("dndDraggingSource"); }, 0);
         dndDragTypeWorkaround.isDragging = false;
@@ -226,6 +226,7 @@ angular.module('dndLists', [])
   .directive('dndList', ['$parse', '$timeout', 'dndDropEffectWorkaround', 'dndDragTypeWorkaround',
                  function($parse,   $timeout,   dndDropEffectWorkaround,   dndDragTypeWorkaround) {
     return function(scope, element, attr) {
+
       // While an element is dragged over the list, this placeholder element is inserted
       // at the location where the element would be inserted after dropping
       var placeholder = getPlaceholderElement();
@@ -241,6 +242,7 @@ angular.module('dndLists', [])
        * is being dragged over our list, or over an child element.
        */
       element.on('dragover', function(event) {
+
         event = event.originalEvent || event;
 
         if (!isDropAllowed(event)) return true;
@@ -309,13 +311,14 @@ angular.module('dndLists', [])
        * one child element per array element.
        */
       element.on('drop', function(event) {
+
         event = event.originalEvent || event;
 
         if (!isDropAllowed(event)) return true;
 
         // The default behavior in Firefox is to interpret the dropped element as URL and
         // forward to it. We want to prevent that even if our drop is aborted.
-        event.preventDefault();
+        event.preventDefault(); 
 
         // Unserialize the data that was serialized in dragstart. According to the HTML5 specs,
         // the "Text" drag type will be converted to text/plain, but IE does not do that.
@@ -337,6 +340,9 @@ angular.module('dndLists', [])
         }
 
         // Retrieve the JSON array and insert the transferred object into it.
+
+
+
         var targetArray = scope.$eval(attr.dndList);
         scope.$apply(function() {
           targetArray.splice(index, 0, transferredObject);
