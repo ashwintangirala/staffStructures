@@ -1,4 +1,4 @@
-var app = angular.module('myApp',  [ 'ui.router', 'templates', 'xeditable', 'ngResource', 'dndLists', 'angular-linq']);
+var app = angular.module('myApp',  [ 'ui.router', 'templates', 'xeditable', 'ngAria', 'ngAnimate', 'ngMaterial', 'ngResource', 'dndLists', 'angular-linq']);
 
 app.config([
   '$stateProvider'

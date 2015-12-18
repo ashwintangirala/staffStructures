@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  country_id: 1
+  holiday_date: 2015-12-17
+  description: MyString
+
+two:
+  country_id: 1
+  holiday_date: 2015-12-17
+  description: MyString

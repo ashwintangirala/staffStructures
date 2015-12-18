@@ -4,7 +4,9 @@ app.controller('MainCtrl', [
   '$scope'
 , '$resource'
 , '$linq'
-, function($scope, $resource, $linq){
+, 'holidays'
+, 'holiday'
+, function($scope, $resource, $linq, holidays, holiday){
 /*
 
 framework - models array 
@@ -32,8 +34,6 @@ should provide FTEs, the ultimate value should be adjustable
 
 output arrays
 
-
-
 */
 
 /* UI */ 
@@ -45,7 +45,7 @@ output arrays
 
     }; 
 
-    $scope.show_settings =false; 
+    $scope.show_settings =true; 
 
     $scope.tab = 2;
 
@@ -57,9 +57,52 @@ output arrays
       return $scope.tab === tabNum;
     };
 
-/* end UI */  
+/* end UI */
 
-/* data for holidays */ 
+/* holidays */
+
+  /*backend holiday methods */ 
+
+/*
+1. holidays.query 
+
+2. add team 
+    $scope.addTeam = function(){
+        var new_team = teams.create( {name: $scope.name} ) ;
+        $scope.teams.push(new_team); 
+        $scope.name = ''; 
+      }
+
+3. delete employee 
+  $scope.deleteEmployee = function(empID){
+    employee.delete( {id: empID} ); 
+    $scope.employees = employees.query();
+  };
+*/
+
+$scope.holidays = holidays.query();
+
+$scope.holidate= null; 
+
+$scope.add_holiday = function(id, h_date, desc){
+
+  var new_holiday = holidays.create( {country_id: id, holiday_date: h_date, description: desc}); 
+  $scope.holidays.push(new_holiday);
+  $scope.descrip = ''; 
+}
+
+$scope.remove_holiday = function(h_id)
+{
+   // var index = $scope.holidays.indexOf(row);
+   //  if (index !== -1) {
+   //      $scope.holidays.splice(index, 1);
+   //  }
+   holiday.delete({id: h_id}); 
+   $scope.holidays = holidays.query(); 
+
+}
+  
+  /*END backend holiday methods */      
 
     $scope.countries = [
         {country: 'Australia', abbreviation: 'AU', id: 867},
@@ -77,17 +120,12 @@ output arrays
         {country: 'United States', abbreviation: 'US', id: 1080 },
     ];
 
-    $scope.holidays = [
-    {country_id: 1080, date: '20150101', description: 'this is a holiday'}
+var newYear = new Date("January 1, 2016");
 
-,    {country_id: 1078, date: '20150101', description: 'this is a holiday'}
 
-    ];
 
-/* end data for holidays */ 
-
+/* end holidays */ 
 enumerator = $linq.Enumerable();
-
 /* process research teams */
 // {type: "team", id: 1, name: 'a', ftes: 10, expected_tpv:19, columns: [[], []]}
 
@@ -117,7 +155,6 @@ var team_raw_data = [
 
 /* end filter data */ 
 
-
   var team_agg = enumerator.From(team_raw_data)
       .GroupBy("{team_id: $.team_id, team: $.team}", null,
                function (key, g) {
@@ -139,7 +176,7 @@ var team_raw_data = [
   });
 
   team_agg.forEach(function(item){
-    item.expected_tpv = item.productivity* item.fte;
+    item.expected_tpv = item.productivity * item.fte;
   }); 
 /* end process research teams */ 
 

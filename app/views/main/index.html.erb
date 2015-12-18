@@ -3,11 +3,8 @@
 
    <button ng-click="settings();">show settings</button> 
 
-
       <div class="row" ng-hide="show_settings">
-
          <div class='col-md-4' style="min-height: 250px;"> 
-
 
           <h4> accounts </h4>
 
@@ -31,7 +28,7 @@
          </div>
 
          <div class='col-md-4'>
-         <h4> notes </h4>
+         <h4> test </h4>
 
          </div>
          <!-- end teams col -->
@@ -147,70 +144,68 @@
           <div class="col-md-3">
 
             <div class="row" style="margin-left: 30px;">
-            select country
+            Select Country
             </div>
 
             <div class="row" style="margin-left: 20px; margin-top: 10px">
-              <select ng-model="c.id" 
-                ng-options="c.country for c in countries">
+              <select ng-model="selected_country" ng-options="c.country for c in countries">
               </select>
             </div>
 
           </div>
           
           <div class="col-md-3">
-
             <div class="row">
-            select date
+            Select Holiday
             </div>
 
-            <div class="row" style="margin-top: 10px">
-              <md-datepicker ng-model="birthday"></md-datepicker>
+            <div class="row" >
+              <md-datepicker ng-model="holidate"></md-datepicker>
             </div>
-
           </div>
 
           <div class="col-md-3">
-
             <div class="row">
             Description
             </div>
 
             <div class="row" style=" margin-top: 10px">
-              <input type="text"> </input>
+              <input ng-model="descrip" class="img-rounded" type="text"> </input>
             </div>
-
           </div>
 
           <div class="col-md-3">
-
             <div class="row" style="margin-left: 10px;">
-            <button type="button" class="btn btn-primary" style="height:50px;"> Save Holiday </button> 
+            <button type="button" class="btn btn-primary" ng-click="add_holiday(selected_country.id, holidate, descrip);" style="height:50px;"> Save Holiday </button> 
             </div>
-
           </div>
 
-
-          </div>
           <div class="row">
-
             <div class="row top-buffer" >
 
             </div>
-            <div class="row top-buffer" style="margin-left: 10px;">
+            <div class="row top-buffer" style="margin-left: 30px;">
 
               <div class="col-md-6">
                 <table st-table="rowCollection" class="table table-striped">
                   <thead>
                   <tr>
-                    <th>Date</th>
+                    <th st-sort="holiday_date">Date</th>
                     <th>Description</th>
+                    <th></th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr ng-repeat="row in holidays">
-                    <td>{{row.day}}</td>
+                    <td>{{row.holiday_date}}</td>
                     <td>{{row.description}}</td>
+                    <td>
+                      <button type="button" class="btn mini red-stripe" ng-click="remove_holiday(row.id);">
+                      Delete
+
+                      </button>
+
+                    </td>
 
                   </tr>
                   </tbody>
@@ -219,6 +214,9 @@
 
             </div>
           </div>
+
+<!-- test here -->
+
           <br><br><br><br><br><br>          
         </div>
 

@@ -1,22 +1,21 @@
 var app = angular.module('myApp');
 
-app.factory('teams', [
+app.factory('holidays', [
  '$resource' 
  , function($resource ){
-  return $resource('/teams.json', {}, {
+  return $resource('/holidays.json', {}, {
         query:   {method:'GET', isArray: true},
         create:  {method: 'POST'}
   }); 
 }]);
 
 
-app.factory('team', [
+app.factory('holiday', [
  '$resource' 
  , function($resource ){
-  return $resource('/teams/:id.json', {}, {
+  return $resource('/holidays/:id.json', {}, {
         show: {method: 'GET'},
         delete: {method: 'DELETE', params:{id: '@id'}},
-        update:  {method: 'PUT', params: {id: '@id'}}  
+
   }); 
 }]);
-
