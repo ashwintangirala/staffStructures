@@ -19,3 +19,26 @@ app.factory('holiday', [
 
   }); 
 }]);
+
+
+
+
+app.filter("include_v", function() {
+    return function(objectArray, includeProp) {
+        var newObjectArray = [];
+        objectArray = objectArray || [];  
+
+        objectArray.forEach(function(item){
+
+          if( item.country_id == includeProp)
+          {
+
+            newObjectArray.push(item); 
+          }
+
+        })
+
+        return newObjectArray; 
+    };
+});
+

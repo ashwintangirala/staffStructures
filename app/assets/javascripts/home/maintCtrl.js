@@ -6,7 +6,8 @@ app.controller('MainCtrl', [
 , '$linq'
 , 'holidays'
 , 'holiday'
-, function($scope, $resource, $linq, holidays, holiday){
+, '$filter'
+, function($scope, $resource, $linq, holidays, holiday, filter){
 /*
 
 framework - models array 
@@ -36,8 +37,7 @@ output arrays
 
 */
 
-/* UI */ 
-    
+/* UI */  
     $scope.settings = function(){
       if(this.show_settings==false)
         {this.show_settings=true; }
@@ -61,24 +61,7 @@ output arrays
 
 /* holidays */
 
-  /*backend holiday methods */ 
-
-/*
-1. holidays.query 
-
-2. add team 
-    $scope.addTeam = function(){
-        var new_team = teams.create( {name: $scope.name} ) ;
-        $scope.teams.push(new_team); 
-        $scope.name = ''; 
-      }
-
-3. delete employee 
-  $scope.deleteEmployee = function(empID){
-    employee.delete( {id: empID} ); 
-    $scope.employees = employees.query();
-  };
-*/
+/*backend holiday methods */ 
 
 $scope.holidays = holidays.query();
 
@@ -92,17 +75,16 @@ $scope.add_holiday = function(id, h_date, desc){
 }
 
 $scope.remove_holiday = function(h_id)
-{
-   // var index = $scope.holidays.indexOf(row);
-   //  if (index !== -1) {
-   //      $scope.holidays.splice(index, 1);
-   //  }
+{ 
    holiday.delete({id: h_id}); 
    $scope.holidays = holidays.query(); 
-
 }
-  
-  /*END backend holiday methods */      
+  /*END backend holiday methods */   
+  /* holiday table */ 
+  $scope.sortType = 'holiday_date'; 
+  $scope.sortReverse = false; 
+
+  /* end holiday table */    
 
     $scope.countries = [
         {country: 'Australia', abbreviation: 'AU', id: 867},
@@ -120,11 +102,10 @@ $scope.remove_holiday = function(h_id)
         {country: 'United States', abbreviation: 'US', id: 1080 },
     ];
 
-var newYear = new Date("January 1, 2016");
+$scope.selectedCountryID = 0; 
 
+/* end holidays */
 
-
-/* end holidays */ 
 enumerator = $linq.Enumerable();
 /* process research teams */
 // {type: "team", id: 1, name: 'a', ftes: 10, expected_tpv:19, columns: [[], []]}
@@ -149,7 +130,6 @@ var team_raw_data = [
     return _.pick(item, ['business_unit', 'pod', 'team']); 
   })
      , 'business_unit');
-
 
   $scope.lo_test = grp1; 
 
@@ -178,9 +158,7 @@ var team_raw_data = [
   team_agg.forEach(function(item){
     item.expected_tpv = item.productivity * item.fte;
   }); 
-/* end process research teams */ 
-
-
+/* end process research teams */
 
 
 /* process accounts */ 
@@ -205,7 +183,6 @@ var team_raw_data = [
         .ToArray();
 
 //modifying account_agg_pre to match fields in below p_models.templates.account type 
-
     account_agg.forEach(function(item){
       item.type = "account"; 
       item.region = 'all'; 
@@ -286,13 +263,10 @@ var team_raw_data = [
 
   $scope.func = function(obj){
      var demand = 0; 
-    // debugger;
-    // returns length of array: obj.columns[0].length;
-    //obj..foreach()
-    obj.columns[0].forEach(function(item){
+
+      obj.columns[0].forEach(function(item){
       demand += (item.expected_tpv * calc_growth(item.growth) )   
     }); 
-
 /* end account functions */
 
     return demand;  
