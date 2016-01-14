@@ -1,9 +1,9 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
 # Use postgresql as the database for Active Record
-gem 'pg'
+gem 'pg', '>=0.18.4'
 
 gem 'rename'
 
@@ -14,6 +14,8 @@ gem 'responders', '~> 2.0'
 #gem 'therubyracer', :platforms => :ruby
 
 gem 'libv8'
+
+#gem 'mongoid', '~> 5.0.0'
 
 gem "bower-rails", "~> 0.10.0"
 

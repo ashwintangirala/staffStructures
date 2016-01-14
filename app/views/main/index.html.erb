@@ -4,33 +4,21 @@
    <button ng-click="settings();">show settings</button> 
 
       <div class="row" ng-hide="show_settings">
-         <div class='col-md-4' style="min-height: 250px;"> 
 
-          <h4> accounts </h4>
+         <div class='col-md-6' style="min-height: 250px;"> 
+          <h4> Section 1</h4>
+           <br>
+           {{lo_test}}
 
-          {{models.dropzones._Accounts}}
-
-          <br>
-          <h4> teams </h4>
-
-           {{models.dropzones.Teams}}
-
-         <!-- end teams -->
          </div>   <!-- end teams col -->
 
-         <div class='col-md-4'>
-             <h4> testing a function </h4>
-             {{getTeamDemand()}}
+         <div class='col-md-6'>
+             <h4> section 2 </h4>
              <br>
 
-             {{models.dropzones.Teams[0].columns[0][0].name}}
-
          </div>
 
-         <div class='col-md-4'>
-         <h4> test </h4>
 
-         </div>
          <!-- end teams col -->
       </div>
       <!-- end row -->

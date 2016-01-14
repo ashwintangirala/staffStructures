@@ -59,6 +59,13 @@ output arrays
 
 /* end UI */
 
+/* UI - Filters - BU Team Pod */
+
+
+
+/* end UI - Filters - BU Team Pod */
+
+
 /* holidays */
 
 /*backend holiday methods */ 
@@ -111,16 +118,16 @@ enumerator = $linq.Enumerable();
 // {type: "team", id: 1, name: 'a', ftes: 10, expected_tpv:19, columns: [[], []]}
 
 var team_raw_data = [
-   {business_unit: 'b', pod: "cgs", team_id: 1, team: 'Mck Other', emp_name: 'rachel hinds',  fte: 1}
-,  {business_unit: 'b', pod: "cgs", team_id: 2, team: 'Mck CGS EI', emp_name: 'rachel loebl', fte: 1 }
-,  {business_unit: 'b', pod: "cgs", team_id: 3, team: 'Bain Other', emp_name: 'Leo Queralt',  fte: 1 }
-,  {business_unit: 'b', pod: "cgs", team_id: 3, team: 'Bain Other', emp_name: 'Katie Weaver', fte: 1 }
+   {business_unit: 'professional services firms research', pod: "A", team_id: 1, team: 'Mck Other', emp_name: 'rachel hinds',  fte: 1}
+,  {business_unit: 'professional services firms research', pod: "A", team_id: 2, team: 'Mck CGS EI', emp_name: 'rachel loebl', fte: 1 }
+,  {business_unit: 'professional services firms research', pod: "B", team_id: 3, team: 'Bain Other', emp_name: 'Leo Queralt',  fte: 1 }
+,  {business_unit: 'professional services firms research', pod: "B", team_id: 3, team: 'Bain Other', emp_name: 'Katie Weaver', fte: 1 }
 
-,  {business_unit: 'a', pod: "cgs", team_id: 4, team: 'HC Growth', emp_name: 'Melissa Nezamzadeh', fte: 1 }
-,  {business_unit: 'a', pod: "cgs", team_id: 4, team: 'HC Growth', emp_name: 'Beth Sapire', fte: 1 }
-,  {business_unit: 'a', pod: "cgs", team_id: 4, team: 'HC Growth', emp_name: 'Beth Sapire', fte: 1 }
-,  {business_unit: 'a', pod: "cgs", team_id: 5, team: 'Growth A', emp_name: 'Peter Calvanelli', fte: 1 }
-,  {business_unit: 'a', pod: "cgs", team_id: 5, team: 'Growth A', emp_name: 'Gabbi Lewin' , fte: 1 }
+,  {business_unit: 'americas financial services research', pod: "C", team_id: 4, team: 'HC Growth', emp_name: 'Melissa Nezamzadeh', fte: 1 }
+,  {business_unit: 'americas financial services research', pod: "C", team_id: 4, team: 'HC Growth', emp_name: 'Beth Sapire', fte: 1 }
+,  {business_unit: 'americas financial services research', pod: "D", team_id: 4, team: 'HC Growth', emp_name: 'Beth Sapire', fte: 1 }
+,  {business_unit: 'americas financial services research', pod: "D", team_id: 5, team: 'Growth A', emp_name: 'Peter Calvanelli', fte: 1 }
+,  {business_unit: 'americas financial services research', pod: "D", team_id: 5, team: 'Growth A', emp_name: 'Gabbi Lewin' , fte: 1 }
 ]; 
 
 /*  filter data */ 
@@ -130,6 +137,7 @@ var team_raw_data = [
     return _.pick(item, ['business_unit', 'pod', 'team']); 
   })
      , 'business_unit');
+
 
   $scope.lo_test = grp1; 
 
