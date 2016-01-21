@@ -41,13 +41,13 @@ output arrays
     $scope.settings = function(){
       if(this.show_settings==false)
         {this.show_settings=true; }
-      else this.show_settings = false; 
+      else this.show_settings = false;
 
-    }; 
+    };
 
     $scope.show_settings =true; 
 
-    $scope.tab = 2;
+    $scope.tab = 1;
 
     $scope.setTab = function(newTab){
       $scope.tab = newTab;
@@ -139,6 +139,8 @@ var team_raw_data = [
      , 'business_unit');
 
 
+
+
   $scope.lo_test = grp1; 
 
 /* end filter data */ 
@@ -211,7 +213,7 @@ var team_raw_data = [
             // [[], []] 
         ],
         dropzones: {
-            Teams: [ 
+            Teams: [
                    { type: 'team'
                    , team_id: 78
                    , team: 'mck other'
@@ -227,7 +229,7 @@ var team_raw_data = [
                      , columns: [  ]
                    }
                  ]
-          ,  _Accounts: [
+          ,  Accounts: [
                 {
                     name: 'abcc',
                     id: 9,
@@ -248,12 +250,11 @@ var team_raw_data = [
   }
 /* end structure for account team model */
 
-
 /* initialize account team model */
 
-  p_models.dropzones._Accounts = account_agg; 
+  p_models.dropzones.Accounts = account_agg;
 
-  p_models.dropzones.Teams = team_agg; 
+  p_models.dropzones.Teams = team_agg;
 
   $scope.models = p_models;
 
@@ -275,10 +276,63 @@ var team_raw_data = [
       obj.columns[0].forEach(function(item){
       demand += (item.expected_tpv * calc_growth(item.growth) )   
     }); 
-/* end account functions */
 
     return demand;  
   }
+/* end account functions */
+
+/* drag and drop 2 */
+
+        $scope.centerAnchor = true;
+
+        $scope.toggleCenterAnchor = function () {$scope.centerAnchor = !$scope.centerAnchor}
+
+        $scope.draggableObjects = [{name:'one'}, {name:'two'}, {name:'three'}];
+
+        $scope.droppedObjects1 = account_agg;
+
+        $scope.droppedObjects2= team_agg;
+
+        $scope.onDropComplete1=function(data,evt){
+          // console.log("on drop complete 1");
+            var index = $scope.droppedObjects1.indexOf(data);
+            if (index == -1)
+            $scope.droppedObjects1.push(data);
+        }
+
+        $scope.onDragSuccess1=function(data,evt){
+
+            var index = $scope.droppedObjects1.indexOf(data);
+            if (index > -1) {
+                $scope.droppedObjects1.splice(index, 1);
+                // console.log("on drag success 1");
+            }
+        }
+
+         $scope.onDropComplete2=function(teamIndex, data,evt){
+          // console.log("on drop complete 2");
+
+            var index = $scope.droppedObjects2[teamIndex].columns[0].indexOf(data);
+            if (index == -1) {
+                $scope.droppedObjects2[teamIndex].columns[0].push(data);
+            }
+        }
+
+        $scope.onDragSuccess2=function(teamIndex, data, evt){
+          // console.log("on drag success 2");
+
+            var index = $scope.droppedObjects2[teamIndex].columns[0].indexOf(data);
+            if (index > -1) {
+                $scope.droppedObjects2[teamIndex].columns[0].splice(index, 1);
+            }
+        }
+
+        var inArray = function(array, obj) {
+            var index = array.indexOf(obj);
+        }
+
+/* END drag and drop 2 */
+
 
 }])
 
