@@ -294,36 +294,42 @@ var team_raw_data = [
         $scope.droppedObjects2= team_agg;
 
         $scope.onDropComplete1=function(data,evt){
-          // console.log("on drop complete 1");
+          console.log("on drop complete 1");
             var index = $scope.droppedObjects1.indexOf(data);
-            if (index == -1)
+            if (index == -1 && data !=null)
             $scope.droppedObjects1.push(data);
         }
 
         $scope.onDragSuccess1=function(data,evt){
-
+             
             var index = $scope.droppedObjects1.indexOf(data);
+            // console.log("DRS 1, index value: " + index);
+            
             if (index > -1) {
                 $scope.droppedObjects1.splice(index, 1);
                 // console.log("on drag success 1");
             }
         }
 
-         $scope.onDropComplete2=function(teamIndex, data,evt){
-          // console.log("on drop complete 2");
+         $scope.onDropComplete2=function(teamIndex, data, evt){
 
             var index = $scope.droppedObjects2[teamIndex].columns[0].indexOf(data);
-            if (index == -1) {
+            // console.log("on drop complete 2 team index is " + teamIndex + ". index is " + index);
+
+            if (index == -1 && data!= null ) {
                 $scope.droppedObjects2[teamIndex].columns[0].push(data);
             }
+
         }
 
         $scope.onDragSuccess2=function(teamIndex, data, evt){
-          // console.log("on drag success 2");
 
             var index = $scope.droppedObjects2[teamIndex].columns[0].indexOf(data);
+              // console.log("DRS 2" + " team index is " + teamIndex + ". index is: " + index );
+
             if (index > -1) {
                 $scope.droppedObjects2[teamIndex].columns[0].splice(index, 1);
+                // console.log("DRS 2 splicing data");
             }
         }
 

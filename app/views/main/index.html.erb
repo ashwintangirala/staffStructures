@@ -8,7 +8,7 @@
          <div class='col-md-6' style="min-height: 250px;"> 
           <h4> Section 1</h4>
            <br>
-           {{models.dropzones.Teams}}
+           {{ droppedObjects2}}
 
          </div>   <!-- end teams col -->
 
@@ -43,13 +43,13 @@
             &nbsp&nbsp Supply: {{item.fte * item.productivity | number:0}} 
             &nbsp&nbsp Demand: {{ func(item)  | number: 0}} 
             </h3> 
-            <div   ng-repeat="list in item.columns" ng-include="'display.html'"> </div>
+            <div ng-repeat="list in item.columns" ng-include="'display.html'"> </div>
             <div class="clearfix"> </div>
          </div> 
       </script> 
 
       <script type="text/ng-template" id="account.html"> 
-      <div class="item"> 
+      <div class="item">
 
          <div class="col-md-3">
             <div class="nameBox">
@@ -62,7 +62,7 @@
          </div>
 
          <div class="col-md-3"> 
-         Expected Growth:  <br>  <input ng-model="item.growth" type="text"  style="width: 40%; text-algin:center;"/>
+         Expected Growth: <br> <input ng-model="item.growth" type="text"  style="width: 40%; text-algin:center;"/>
          </div>
 
          <div class="col-md-3"> 
@@ -74,28 +74,95 @@
 
 
       <script type="text/ng-template" id="accountV2.html"> 
-      <div class="item"> 
 
-         <div class="col-md-3">
-            <div class="nameBox">
-                {{obj.name}}  
+        <div class="row">
+
+          <div class="col-md-3 cName">
+            {{obj.name}}
+          </div>
+
+          <div class="col-md-7">
+            <div class="row"> 
+              <div class="col-md-6 PQLabel"> 2015 Q1 Wins: </div> 
+
+              <div class="col-md-6 PQWins"> {{obj.TPV}} </div>
+
             </div>
-         </div>
 
-         <div class="col-md-3"> 
-         Last Quarter TPV: {{obj.TPV}}  
-         </div>
+            <div class="row">
 
-         <div class="col-md-3"> 
-         Expected Growth:  <br>  <input ng-model="obj.growth" type="text"  style="width: 40%; text-algin:center;"/>
-         </div>
+              <div class="col-md-6 growthLabel"> YoY Growth &nbsp&nbsp: </div>
+              <input class="col-md-6 growthInput" ng-model="obj.growth" ng-cancel-drag type="text" style="width: 20%; text-algin:center;"/>
 
-         <div class="col-md-3"> 
-         Expected Demand: {{ obj.expected_tpv * angular_growth(obj.growth) | number: 0}}
-         </div>
+            </div>
 
-       </div> 
+          </div>
+
+          <div class="col-md-2 expectedDemand">
+          
+            {{ obj.expected_tpv * angular_growth(obj.growth) | number: 0}}
+
+          </div>
+
+        </div>
+
+
+
       </script>
+
+      <script type="text/ng-template" id="teamV2.html">
+
+        <div class="row">
+
+          <div class="col-md-3">
+
+          {{team.team}}
+
+          </div>
+
+          <div class="col-md-3">
+
+            <div class="row">
+            Productivity: <input type='text' ng-model="team.productivity" style="width:10%;"/>
+            </div>
+
+            <div class="row">
+            FTEs: {{team.fte}}
+            </div>
+
+          </div>
+
+          <div class="col-md-3">
+
+            <div class="row">
+            Demand: {{ func(team)  | number: 0}}
+            </div>
+
+            <div class="row">
+            Supply: {{team.fte * team.productivity | number:0}}
+            </div>
+
+          </div>
+
+          <div class="col-md-3">
+
+          Balanced
+
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="accountContainer">
+              <div ng-repeat="obj in team.columns[0]" ng-drag="true" 
+              ng-drag-data="obj" 
+              ng-drag-success="onDragSuccess2($parent.$parent.$index, $data,$event)" 
+              ng-include="'accountV2.html'" > 
+              </div>
+          </div>        
+        </div> 
+
+      </script> 
 
       <!-- end scripts -->
 
@@ -152,45 +219,58 @@ s                   </div>
 
              <div class="row" id="new dragNDrop">
 
-                 <div class="col-md-6">
-
+                 <div class="col-md-8">
+<!-- 
                     <ul>
-                      <li ng-repeat="team in models.dropzones.Teams">
+                      <li ng-repeat="team in droppedObjects2">
 
-                      <!-- {{team.team}} -->
-
-                        <div ng-drop="true" ng-drop-success="onDropComplete2($index, $data, $event)">
-                        <span class="title">{{team.team}}</span>  accounts + {{$index}}
-
-                            <div ng-repeat="obj in team.columns[0]" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess2($parent.$index, $data,$event)" ng-center-anchor="{{centerAnchor}}">
- 
-                                <!-- {{act.name}}  -->
-                              <div class="row" ng-include="'accountV2.html'">
-                              </div>
-
- 
-                            </div>
-
+                        <div ng-drop="true" ng-drop-success="onDropComplete2($index, $data, $event)"
+                        ng-include="'teamV2.html'">
                         </div>
+
+                            <div ng-repeat="obj in team.columns[0]" ng-drag="true" 
+                            ng-drag-data="obj" 
+                            ng-drag-success="onDragSuccess2($parent.$parent.$index, $data,$event)" 
+                            ng-include="'accountV2.html'" > 
+                            </div>
 
                       </li >
                     </ul>
+                     -->
+                      <div ng-repeat="team in droppedObjects2">
+                        <div class="teams">
 
+                              <div ng-drop="true" ng-drop-success="onDropComplete2($index, $data, $event)"
+                              ng-include="'teamV2.html'" class="main" >
+                              </div>
+<!-- 
+                                <div class="accountContainer">
+                                    <div ng-repeat="obj in team.columns[0]" ng-drag="true" 
+                                    ng-drag-data="obj" 
+                                    ng-drag-success="onDragSuccess2($parent.$parent.$index, $data,$event)" 
+                                    ng-include="'accountV2.html'" > 
+                                    </div>
+                                </div>
+                                 -->
+
+                          </div>
+                      </div>
                  </div>
 
-                 <div class="col-md-6">
-                    <div ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
+                 <div class="col-md-4">
+
+                    <div class="accounts">
+                      <div ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
                         <span class="title">Drop area #1</span>
 
-                        <div ng-repeat="obj in droppedObjects1" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)" ng-center-anchor="{{centerAnchor}}" >
-                            <!-- {{obj.name}} -->
-                            <div class="row" ng-include="'accountV2.html'">
-                            </div>
+                        <div ng-repeat="obj in droppedObjects1" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)" ng-center-anchor="{{centerAnchor}}" ng-include="'accountV2.html'" class="main">
 
                         </div>
 
-                    </div>
-                 </div>
+                      </div>
+                   </div>
+
+                  </div>
 
              </div>
  

@@ -147,3 +147,78 @@
     width: 50%;
 }
 
+/***************************** styles for account *****************************/
+
+.accounts .main{
+    border-style: solid;
+    border-color: #cce0ff;
+    margin-top: 10px; 
+    height: 80px; 
+    width: 450px;
+
+}
+
+.accounts .cName{
+    margin-top: 4%; 
+    text-align: center; 
+    font-size: 120%; 
+
+}
+
+.accounts .PQLabel{
+
+    text-align: left; 
+    font-size: 90%; 
+
+}
+
+.accounts .PQWins{
+
+    text-align: left; 
+    font-size: 90%; 
+
+}
+
+.accounts .cGrowth{
+
+    text-align: center; 
+    font-size: 90%; 
+
+}
+
+.accounts .growthLabel{
+
+    text-align: left; 
+    font-size: 90%; 
+
+}
+
+.accounts .growthInput{
+
+    text-align: center; 
+    font-size: 90%; 
+
+}
+
+.accounts .expectedDemand{
+    margin-top: 4%; 
+    font-size: 120%; 
+
+}
+
+.teams .container{
+    border-style: solid;
+    border-color: rgb(51, 51, 255);
+
+}
+
+.teams .main{
+    margin-top: 4%;
+    border-style: solid;
+    border-color: rgb(51, 51, 255);
+
+}
+
+.teams .accountContainer{
+    margin-top: 4%;
+}
