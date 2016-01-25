@@ -177,6 +177,7 @@ var team_raw_data = [
     { id: 10, name:'goldman', volume: 34, region: 'EMEA', country:'Sweden', pa:'tmt'},
     { id: 11, name:'perry', volume: 23, region: 'EMEA', country:'Denmark', pa:'hc'},
     { id: 11, name:'perry', volume: 20, region: 'Americas', country:'USA', pa:'tmt'}];
+
 /* process accounts */
 
     var account_agg = enumerator.From(account_raw_data)
@@ -294,7 +295,7 @@ var team_raw_data = [
         $scope.droppedObjects2= team_agg;
 
         $scope.onDropComplete1=function(data,evt){
-          console.log("on drop complete 1");
+          // console.log("on drop complete 1");
             var index = $scope.droppedObjects1.indexOf(data);
             if (index == -1 && data !=null)
             $scope.droppedObjects1.push(data);

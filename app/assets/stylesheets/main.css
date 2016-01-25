@@ -141,41 +141,91 @@
     margin: 10px;
 }
 
-
 .teamsAccounts .dropzone .container-element .column {
     float: left;
     width: 50%;
 }
 
+/***************************** styles for filters *****************************/
+
+ .filters .qtr{
+    margin-left: 5px;
+
+}
+
+.filters .teams {
+
+}
+
+.filters .teams .BUFilter{
+    margin-left: 5px;
+
+}
+
+.filters .accounts .segment{
+    margin-left: 5px;
+
+
+}
+
+
+
+/***************************** end styles for filters *****************************/
+
+
 /***************************** styles for account *****************************/
 
 .accounts .main{
     border-style: solid;
-    border-color: #cce0ff;
+    border-width: 2px; 
+    background-color: #F5F5F5;
+    border-color: #f0f0f5;
+    border-radius: 10px;
     margin-top: 10px; 
-    height: 80px; 
-    width: 450px;
-
+    min-height: 80px;
+ 
 }
 
 .accounts .cName{
-    margin-top: 4%; 
+    vertical-align: center;
+    width: 20%;
+    margin-top:4%;
+    margin-left: 3%;
+    margin-right:2%;
     text-align: center; 
-    font-size: 120%; 
+    font-size: 120%;
+    color: #ffffff;
+    border-radius: 5px;
+    background-color: #F24C45;  
+ 
+}
+
+.accounts .middle{
+    height : 15vh;
+    position: relative;
+}
+
+.accounts .middleTop{
+    min-height: 50%
+
+}
+
+.accounts .middleBottom{
+    min-height: 50%;
 
 }
 
 .accounts .PQLabel{
-
-    text-align: left; 
-    font-size: 90%; 
-
+    text-align: left;
+    margin-top: 5%; 
+    font-size: 90%;
 }
 
 .accounts .PQWins{
 
     text-align: left; 
-    font-size: 90%; 
+    margin-top: 5%;     
+    font-size: 90%;  
 
 }
 
@@ -189,36 +239,138 @@
 .accounts .growthLabel{
 
     text-align: left; 
+    margin-top: 5%;     
     font-size: 90%; 
 
 }
 
 .accounts .growthInput{
+    margin-top: 5%; 
+    font-size: 90%; 
+    width: 55px;
+}
+
+.accounts .expectedDemand{
+
+    font-size: 120%; 
+    padding-top: 5%;
+
+/*    background-color: orange*/;
+    height: 15vh;
+
+}
+
+.teams .main{
+    margin-top: 4%;
+    background-color: #ffffff;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: #f0f0f5;
+}
+
+.teams .main .tName{
+    margin-top: 2%; 
+    text-align: center; 
+    font-size: 120%;  
+
+}
+
+.teams .accountContainer{
+    margin-top: 2%;
+    border-style: solid;
+    border-width: 1px;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-color: #F5F5F5;
+    margin-left: 3%; 
+    margin-right: 3%; 
+    min-height: 50px; 
+}
+
+.teams .accountContainer .middle{
+    height : 10vh;
+    position: relative;
+
+
+}
+
+.teams .accountContainer .middleTop{
+    min-height: 50%
+
+}
+
+.teams .accountContainer .middleBottom{
+    min-height: 50%;
+
+}
+
+.teams .accountContainer .PQLabel{
+    text-align: left; 
+    font-size: 90%; 
+
+}
+
+.teams .accountContainer .PQWins{
+
+    text-align: left; 
+    font-size: 90%; 
+
+}
+
+.teams .accountContainer .cGrowth{
 
     text-align: center; 
     font-size: 90%; 
 
 }
 
-.accounts .expectedDemand{
+.teams .accountContainer .cName{
+    vertical-align: center;
+    width: 20%;
+    margin-top:2%;
+    margin-left: 3%;
+    margin-right:2%;
+    text-align: center; 
+    font-size: 100%;
+    color: #ffffff;
+    border-radius: 5px;
+    background-color: #F24C45;  
+ 
+}
+
+.teams .accountContainer .expectedDemand{
     margin-top: 4%; 
-    font-size: 120%; 
+    font-size: 100%; 
 
 }
 
-.teams .container{
+.teams .accountContainer .growthInput{
+    /*margin-top: 5%; */
+    font-size: 90%;
+    border-width: 1px; 
+    border-radius: 3px;
+    border-color:  #F5F5F5;
+    width: 55px;
+}
+
+.teams .accountContainer  .growthLabel{
+
+    text-align: left; 
+    /*margin-top: 5%;     */
+    font-size: 90%; 
+
+}
+
+
+.teams .accountContainer .main{
     border-style: solid;
-    border-color: rgb(51, 51, 255);
+    border-width: 2px; 
+    background-color: #F5F5F5;
+    border-color: #f0f0f5;
+    border-radius: 10px;
+    margin-top: 3px; 
+    min-height: 60px;
 
 }
 
-.teams .main{
-    margin-top: 4%;
-    border-style: solid;
-    border-color: rgb(51, 51, 255);
-
-}
-
-.teams .accountContainer{
-    margin-top: 4%;
-}

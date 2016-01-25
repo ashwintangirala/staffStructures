@@ -1,5 +1,5 @@
 <div ng-controller="MainCtrl">
-   <div class = "container"> 
+   <div class = "container-fluid"> 
 
    <button ng-click="settings();">show settings</button> 
 
@@ -14,6 +14,7 @@
 
          <div class='col-md-6'>
              <h4> section 2 </h4>
+             {{lo_test}}
              <br>
          </div>
 
@@ -77,36 +78,40 @@
 
         <div class="row">
 
-          <div class="col-md-3 cName">
-            {{obj.name}}
+          <div class="col-sm-3 cName">
+            
+            <p>{{obj.name}}</p>
           </div>
 
-          <div class="col-md-7">
-            <div class="row"> 
-              <div class="col-md-6 PQLabel"> 2015 Q1 Wins: </div> 
+          <div class="col-sm-6 middle">
+            <div class="row middleTop" > 
 
-              <div class="col-md-6 PQWins"> {{obj.TPV}} </div>
+              <div class="col-md-6 PQLabel"> <p> 2015 Q1 Wins: </p> </div> 
+              <div class="col-md-6 PQWins"> <p> {{obj.TPV}} </p> </div>
 
             </div>
 
-            <div class="row">
+            <div class="row middleBottom">
 
-              <div class="col-md-6 growthLabel"> YoY Growth &nbsp&nbsp: </div>
-              <input class="col-md-6 growthInput" ng-model="obj.growth" ng-cancel-drag type="text" style="width: 20%; text-algin:center;"/>
+              <div class="col-sm-6 growthLabel">  
+                <p> YoY Growth  </p>
+              </div>
+
+              <input class="col-sm-6 growthInput" ng-model="obj.growth" ng-cancel-drag type="text" />
 
             </div>
 
           </div>
 
-          <div class="col-md-2 expectedDemand">
+          <div class="col-sm-3 expectedDemand">
           
-            {{ obj.expected_tpv * angular_growth(obj.growth) | number: 0}}
+            <p>
+              {{ obj.expected_tpv * angular_growth(obj.growth) | number: 0}}
+            </p>
 
           </div>
 
         </div>
-
-
 
       </script>
 
@@ -114,7 +119,7 @@
 
         <div class="row">
 
-          <div class="col-md-3">
+          <div class="col-md-3 tName">
 
           {{team.team}}
 
@@ -123,7 +128,7 @@
           <div class="col-md-3">
 
             <div class="row">
-            Productivity: <input type='text' ng-model="team.productivity" style="width:10%;"/>
+            Productivity: <input type='text' ng-model="team.productivity" style="width:25%; border-radius:3px; border-width:1px;"/>
             </div>
 
             <div class="row">
@@ -154,12 +159,15 @@
 
         <div class="row">
           <div class="accountContainer">
+
               <div ng-repeat="obj in team.columns[0]" ng-drag="true" 
               ng-drag-data="obj" 
               ng-drag-success="onDragSuccess2($parent.$parent.$index, $data,$event)" 
-              ng-include="'accountV2.html'" > 
+              ng-include="'accountV2.html'" 
+              class="main"> 
               </div>
-          </div>        
+
+          </div> 
         </div> 
 
       </script> 
@@ -174,6 +182,7 @@
             <li ng-class="{ active: isSet(1) }">
                 <a href ng-click="setTab(1)">Targets</a>
             </li>
+
             <li ng-class="{ active: isSet(2) }">
                 <a href ng-click="setTab(2)">Holidays</a>
             </li>
@@ -181,26 +190,48 @@
         </ul>
 
       </div>
-
-      <div class="row">
         <!-- tab example based on http://codepen.io/jasoncluck/pen/iDcbh
              should replace with https://scotch.io/tutorials/angular-routing-using-ui-router
         -->
 
         <div id="target setting" ng-show="isSet(1)">
 
-          <div class="row top-buffer">          
+        <div class="filters">
+         <div class="row top-buffer qtr">
+          Select Quarter: <input type="dropdown"> </input>   
+         </div>
+
+         <div class="row top-buffer teams">
+          
+          <div class="col-md-3 BUFilter">
+            Select BU: <input type="dropdown"> </input>  
           </div>
 
-         <div class="row" style="margin-left: 5px;">
-            Select BU: <input type="dropdown"> </input>  
-            <br>
+          <div class="col-md-3">
+            Select Team: <input type="dropdown"> </input>  
+          </div>
 
-            <!-- {{lo_test}} -->
+          <div class="col-md-3">
+            Select Pod: <input type="dropdown"> </input>  
+          </div>
+
          </div>  
 
-          <div class="row top-buffer">          
+         <div class="row top-buffer accounts" >
+
+          <div class="col-md-3 segment">
+            Select Segment: <input type="dropdown"> </input>            
           </div>
+
+          <div class="col-md-3">
+            Select Segment: <input type="dropdown"> </input>            
+          </div>
+
+
+
+         </div>
+        </div>
+
 
 
 <!--           
@@ -219,56 +250,33 @@ s                   </div>
 
              <div class="row" id="new dragNDrop">
 
-                 <div class="col-md-8">
-<!-- 
-                    <ul>
-                      <li ng-repeat="team in droppedObjects2">
-
-                        <div ng-drop="true" ng-drop-success="onDropComplete2($index, $data, $event)"
-                        ng-include="'teamV2.html'">
-                        </div>
-
-                            <div ng-repeat="obj in team.columns[0]" ng-drag="true" 
-                            ng-drag-data="obj" 
-                            ng-drag-success="onDragSuccess2($parent.$parent.$index, $data,$event)" 
-                            ng-include="'accountV2.html'" > 
-                            </div>
-
-                      </li >
-                    </ul>
-                     -->
+                 <div class="col-md-6">
                       <div ng-repeat="team in droppedObjects2">
                         <div class="teams">
 
                               <div ng-drop="true" ng-drop-success="onDropComplete2($index, $data, $event)"
-                              ng-include="'teamV2.html'" class="main" >
+                              ng-include="'teamV2.html'" class="main">
                               </div>
-<!-- 
-                                <div class="accountContainer">
-                                    <div ng-repeat="obj in team.columns[0]" ng-drag="true" 
-                                    ng-drag-data="obj" 
-                                    ng-drag-success="onDragSuccess2($parent.$parent.$index, $data,$event)" 
-                                    ng-include="'accountV2.html'" > 
-                                    </div>
-                                </div>
-                                 -->
 
-                          </div>
+                        </div>
                       </div>
                  </div>
 
-                 <div class="col-md-4">
+                 <div class="col-md-6 accounts">
 
-                    <div class="accounts">
-                      <div ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
-                        <span class="title">Drop area #1</span>
-
-                        <div ng-repeat="obj in droppedObjects1" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)" ng-center-anchor="{{centerAnchor}}" ng-include="'accountV2.html'" class="main">
-
+                      <div class="row">
+                        <div ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
+                          <span class="title">Drop area #1</span>
                         </div>
 
                       </div>
-                   </div>
+
+                      <div class="row" ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
+
+                        <div ng-repeat="obj in droppedObjects1" ng-drag="true" ng-drag-data="obj" ng-drag-success="onDragSuccess1($data,$event)" ng-center-anchor="{{centerAnchor}}" ng-include="'accountV2.html'" class="main">
+                        </div> 
+
+                      </div>
 
                   </div>
 
@@ -358,25 +366,4 @@ s                   </div>
         </div>
       </div>
    </div> 
-
-<!-- end container -->
-
-<!-- 
-dnd-moved="list.splice($index, 1)"
-
-ng-include="team.html"
-dnd-draggable="item"
-
-dnd-selected="models.selected = item"
-
-dnd-moved="models.dropzones._Accounts.splice($index, 1)"
-
-   <ul dnd-list="aList"  >
-      <li ng-repeat='item in models.dropzones.Teams'
-      dnd-draggable="item"
-      dnd-effect-allowed="move"
-      ng-include="test.html">  
-      </li>
-   </ul>
--->
 </div>
